@@ -6,7 +6,6 @@
 
 #include "const.h"
 
-
 enum Part {
   Player,
   Nishal,
@@ -17,12 +16,13 @@ typedef struct Object_s{
   enum Part type;
 } Object;
 
-Object area[AREA_H][AREA_W];
 
 // Заполняет объекты в массиве
-void CreateArea(Object area[AREA_H][AREA_W]);
+extern void area_create(Object area[AREA_H][AREA_W]);
 
-//
-void MoveObject(Object *)
+// Двигает объект на дельту по координатам
+extern void object_move(Object *obj, int dx, int dy);
+
+extern void object_teleport(Object *obj, int x, int y);
 
 #endif //SGM__GAME_H_

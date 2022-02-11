@@ -6,12 +6,12 @@
 #include "game.h"
 
 int main() {
-  CreateArea(area);
-
+  Object area[AREA_H][AREA_W];
+  area_create(area);
   while (1) {
     getchar();
 
-    print();
+    print(area);
   }
 
 }
