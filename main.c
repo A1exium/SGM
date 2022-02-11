@@ -6,8 +6,7 @@
 #include "game.h"
 
 int main() {
-  Object area[AREA_H][AREA_W];
-  area_create(area);
+  init_game(area, players, nishals);
   while (1) {
     getchar();
 

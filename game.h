@@ -6,23 +6,28 @@
 
 #include "const.h"
 
-enum Part {
+typedef enum Projection_t {
   Player,
   Nishal,
   None,
-};
+} Projection;
 
-typedef struct Object_s{
-  enum Part type;
+typedef struct Object_s {
+  int id;
+  int x;
+  int y;
 } Object;
 
-
 // Заполняет объекты в массиве
-extern void area_create(Object area[AREA_H][AREA_W]);
+extern void init_game(Projection area[AREA_H][AREA_W], Object players[MAX_PLAYERS], Object nishals[MAX_NISHALS]);
 
 // Двигает объект на дельту по координатам
 extern void object_move(Object *obj, int dx, int dy);
 
 extern void object_teleport(Object *obj, int x, int y);
+
+Projection area[AREA_H][AREA_W];
+Object players[MAX_PLAYERS];
+Object nishals[MAX_NISHALS];
 
 #endif //SGM__GAME_H_

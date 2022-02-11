@@ -5,11 +5,11 @@
 #include "visual.h"
 #include <stdio.h>
 
-void print(Object area[AREA_H][AREA_W]) {
+void print(Projection area[AREA_H][AREA_W]) {
 
   for (int y = 0; y < AREA_H; y++) {
     for (int x = 0; x < AREA_W; x++) {
-      switch (area[y][x].type) {
+      switch (area[y][x]) {
         case Player:putchar('#');
           break;
         case Nishal:putchar('*');
