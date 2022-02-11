@@ -1,0 +1,11 @@
+//
+// Created by alexium on 11.02.2022.
+//
+
+#ifndef SGM__CONST_H_
+#define SGM__CONST_H_
+
+#define AREA_W 100
+#define AREA_H 100
+
+#endif //SGM__CONST_H_
