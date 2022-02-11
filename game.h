@@ -10,17 +10,19 @@
 enum Part {
   Player,
   Nishal,
+  None,
 };
 
-struct Object_s{
+typedef struct Object_s{
   enum Part type;
-  int x;
-  int y;
-};
+} Object;
 
-typedef struct Object_s Object;
+Object area[AREA_H][AREA_W];
 
-Object *area[AREA_H][AREA_W];
+// Заполняет объекты в массиве
+void CreateArea(Object area[AREA_H][AREA_W]);
 
+//
+void MoveObject(Object *)
 
 #endif //SGM__GAME_H_
