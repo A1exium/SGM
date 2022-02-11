@@ -7,7 +7,7 @@
 
 void print() {
 
-  for (int y = 0; y < AREA_H; y++)
+  for (int y = 0; y < AREA_H; y++) {
     for (int x = 0; x < AREA_W; x++) {
       enum Part obj_type = area[y][x].type;
       switch (obj_type) {
@@ -16,7 +16,9 @@ void print() {
         case Nishal:putchar('*');
           break;
         default:putchar(' ');
-          break
+          break;
       }
     }
+    putchar('\n');
+  }
 }
