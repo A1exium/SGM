@@ -3,7 +3,6 @@
 //
 
 #include "visual.h"
-#include <stdio.h>
 #include <curses.h>
 
 typedef struct Render_s {
@@ -14,7 +13,12 @@ Render render;
 
 void render_init() {
   render.scr = initscr();
-  resizeterm(AREA_W + 2, AREA_H + 2);
+  resizeterm(AREA_H + 2, AREA_W + 2);
+  cbreak();
+}
+
+void render_destroy() {
+  endwin();
 }
 
 void print_hborder() {
@@ -24,6 +28,7 @@ void print_hborder() {
 
 void print(Object area[AREA_H][AREA_W]) {
   clear();
+  resizeterm(AREA_H + 2, AREA_W + 2);
   print_hborder();
   for (int y = 0; y < AREA_H; y++) {
     addch('|');
