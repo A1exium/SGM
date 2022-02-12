@@ -4,7 +4,6 @@
 #include "visual.h"
 #include "game.h"
 #include <curses.h>
-#include <unistd.h>
 
 int main() {
   render_init();
@@ -12,10 +11,9 @@ int main() {
   chtype w = 0;
 
   while (w != 'q') {
-    w = getch();
     print(area);
-
-    sleep(1);
+    w = getch();
+    refresh();
   }
   render_destroy();
 }

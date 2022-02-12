@@ -27,9 +27,10 @@ void print_hborder() {
 }
 
 void print(Projection area[AREA_H][AREA_W]) {
+//  resizeterm(AREA_H + 2, AREA_W + 2);
   clear();
-  resizeterm(AREA_H + 2, AREA_W + 2);
   print_hborder();
+  addch('\n');
   for (int y = 0; y < AREA_H; y++) {
     addch('|');
     for (int x = 0; x < AREA_W; x++) {
@@ -43,6 +44,7 @@ void print(Projection area[AREA_H][AREA_W]) {
       }
     }
     addch('|');
+    addch('\n');
   }
   print_hborder();
   refresh();
