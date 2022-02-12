@@ -26,14 +26,14 @@ void print_hborder() {
     addch('-');
 }
 
-void print(Object area[AREA_H][AREA_W]) {
+void print(Projection area[AREA_H][AREA_W]) {
   clear();
   resizeterm(AREA_H + 2, AREA_W + 2);
   print_hborder();
   for (int y = 0; y < AREA_H; y++) {
     addch('|');
     for (int x = 0; x < AREA_W; x++) {
-      switch (area[y][x].type) {
+      switch (area[y][x]) {
         case Player:addch('#');
           break;
         case Nishal:addch('*');

@@ -7,5 +7,7 @@
 
 #define AREA_W 50
 #define AREA_H 30
+#define MAX_NISHALS 50
+#define MAX_PLAYERS 2
 
 #endif //SGM__CONST_H_

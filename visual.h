@@ -6,7 +6,7 @@
 #define SGM_CMAKE_BUILD_DEBUG_VISUAL_H_
 
 extern void render_init();
-extern void print(Object area[AREA_H][AREA_W]);
 extern void render_destroy();
+extern void print(Projection area[AREA_H][AREA_W]);
 
 #endif //SGM_CMAKE_BUILD_DEBUG_VISUAL_H_

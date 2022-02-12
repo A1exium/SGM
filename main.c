@@ -8,8 +8,7 @@
 
 int main() {
   render_init();
-  Object area[AREA_H][AREA_W];
-  area_create(area);
+  init_game(area, players, nishals);
   chtype w = 0;
 
   while (w != 'q') {
