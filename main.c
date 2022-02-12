@@ -6,6 +6,7 @@
 #include "game.h"
 
 int main() {
+  render_init();
   Object area[AREA_H][AREA_W];
   area_create(area);
   while (1) {
