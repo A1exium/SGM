@@ -5,29 +5,31 @@
 #define SGM__GAME_H_
 
 #include "const.h"
+#include "tools.h"
 
-typedef enum Projection_t {
+typedef enum GameObjectProjection_t {
   Player,
   Nishal,
   None,
-} Projection;
+} GameObjectProjection;
 
-typedef struct Object_s {
+typedef struct GameObject_s {
   int id;
   int x;
   int y;
-} Object;
+} GameObject;
 
 // Заполняет объекты в массиве
-extern void init_game(Projection area[AREA_H][AREA_W], Object players[MAX_PLAYERS], Object nishals[MAX_NISHALS]);
+extern void init_game(GameObjectProjection area[AREA_H][AREA_W], ListObject players, ListObject nishals);
 
 // Двигает объект на дельту по координатам
-extern void object_move(Object *obj, int dx, int dy);
+extern void object_move(GameObject *obj, int dx, int dy);
 
-extern void object_teleport(Object *obj, int x, int y);
+// "Телепортирует" объект на координаты
+extern void object_teleport(GameObject *obj, int x, int y);
 
-Projection area[AREA_H][AREA_W];
-Object players[MAX_PLAYERS];
-Object nishals[MAX_NISHALS];
+static GameObjectProjection area[AREA_H][AREA_W];
+static ListObject players;
+static ListObject nishals;
 
 #endif //SGM__GAME_H_

@@ -5,7 +5,7 @@
 #include "visual.h"
 #include <stdio.h>
 
-void print(Projection area[AREA_H][AREA_W]) {
+void print(GameObjectProjection area[AREA_H][AREA_W]) {
 
   for (int y = 0; y < AREA_H; y++) {
     for (int x = 0; x < AREA_W; x++) {

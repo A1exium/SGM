@@ -6,7 +6,7 @@
 #include "game.h"
 
 int main() {
-  init_game(area, players, nishals);
+//  init_game(area, players, nishals);
   while (1) {
     getchar();
 
