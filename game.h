@@ -7,29 +7,46 @@
 #include "const.h"
 #include "tools.h"
 
-typedef enum GameObjectProjection_t {
+typedef enum GameObjectType_t {
   Player,
   Nishal,
   None,
-} GameObjectProjection;
+} GameObjectType;
 
 typedef struct GameObject_s {
-  int id;
   int x;
   int y;
 } GameObject;
 
-// Заполняет объекты в массиве
-extern void init_game(GameObjectProjection area[AREA_H][AREA_W], ListObject players, ListObject nishals);
+static GameObjectType area[AREA_H][AREA_W];
+static List players;
+static List nishals;
+
+// Создает новый объект в координатах
+inline GameObject GameObject_new(int x, int y);
 
 // Двигает объект на дельту по координатам
-extern void object_move(GameObject *obj, int dx, int dy);
+inline void gameobject_move(GameObject *obj, int dx, int dy);
 
 // "Телепортирует" объект на координаты
-extern void object_teleport(GameObject *obj, int x, int y);
+inline void gameobject_teleport(GameObject *obj, int x, int y);
 
-static GameObjectProjection area[AREA_H][AREA_W];
-static ListObject players;
-static ListObject nishals;
+// Создает(инициалиазирует) список с игровыми объектами
+// Можно использовать List_new()
+inline List ListGameObject_new();
+
+// Добавляет игровой объект в список
+inline void list_gameobject_add(List list, GameObject obj);
+
+// --------------------
+//      Public API
+// --------------------
+// Здесь размещаются функции, которые вызываются в мейне
+
+// Создает игровой объект(GameObject) и помещает его в список в зависимости от типа type;
+extern void createGameObject(GameObjectType type, int x, int y);
+
+// Заполняет объекты в массиве area
+extern void initGame(GameObjectType area[AREA_H][AREA_W], List players, List nishals);
 
 #endif //SGM__GAME_H_

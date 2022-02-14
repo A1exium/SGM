@@ -7,36 +7,36 @@
 
 #include "const.h"
 
-typedef struct ListObjectItem_s {
+typedef struct ListItem_s {
   void *game_object;
-  struct ListObject_s *prev;
-  struct ListObject_s *next;
-} ListObjectItem;
+  struct List_s *prev;
+  struct List_s *next;
+} ListItem;
 
 // двусвязный список
-typedef struct ListObject_s {
-  ListObjectItem *head;
-} ListObject;
+typedef struct List_s {
+  ListItem *head;
+} List;
 
 // Возвращает следущий элемент в списке
-extern ListObjectItem *list_object_next(ListObjectItem *item);
+extern ListItem *list_next(ListItem *item);
 
 // Создает новый список и возвращает его
-extern ListObject ListObject_new();
+extern List List_new();
 
 // Удаляет список и все объекты в нем
-extern void list_object_drop(ListObject list);
+extern void list_drop(List list);
 
 // Добавляет элемент в список
-extern void list_object_add(ListObject list, ListObjectItem item);
+extern void list_add(List list, ListItem item);
 
 // Удаляет элемент из списка и возвращает его
-extern ListObjectItem *listo_bject_remove(ListObject list, ListObjectItem item);
+extern ListItem *list_remove(ListItem *item);
 
 // Возвращает элемент под индексом index
-extern ListObjectItem *list_object_get(ListObject list, int index);
+extern ListItem *list_get(List list, int index);
 
 // Удаляет элемент под индексом index и возвращает его
-extern ListObjectItem *list_object_pop(ListObject list, int index);
+extern ListItem *list_pop(List list, int index);
 
 #endif //SGM__TOOLS_H_
