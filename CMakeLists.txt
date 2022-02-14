@@ -4,4 +4,4 @@ project(SGM C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(SGM
-        main.c game.c game.h visual.c visual.h const.h tools.c tools.h)
+        src/main.c src/game.c src/game.h src/visual.c src/visual.h src/const.h src/tools.c src/tools.h)

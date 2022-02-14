@@ -7,10 +7,9 @@
 
 int main() {
 //  init_game(area, players, nishals);
-  while (1) {
-    getchar();
-
-    print(area);
-  }
-
+  GameObjectType area[AREA_H][AREA_W];
+  List *players = List_new();
+  List *nishals = List_new();
+  initGame(area, players, nishals);
+  print(area);
 }
