@@ -1,11 +1,9 @@
 //
-// Created by alexium on 11.02.2022.
+// Created by alexium on 16.02.2022.
 //
 
-#ifndef SGM__TOOLS_H_
-#define SGM__TOOLS_H_
-
-#include "const.h"
+#ifndef SGM_SRC_TOOLS_LIST_H_
+#define SGM_SRC_TOOLS_LIST_H_
 
 typedef struct ListItem_s {
   void *value;
@@ -41,4 +39,4 @@ extern ListItem *list_get(List list, int index);
 // Удаляет элемент под индексом index и возвращает его
 extern ListItem *list_pop(List list, int index);
 
-#endif //SGM__TOOLS_H_
+#endif //SGM_SRC_TOOLS_LIST_H_

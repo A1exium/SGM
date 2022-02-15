@@ -1,17 +1,9 @@
 //
-// Created by alexium on 11.02.2022.
+// Created by alexium on 14.02.2022.
 //
 
-#include "game.h"
-#include <stdlib.h>
-
-GameObject *GameObject_new(GameObjectType type, int x, int y) {
-  GameObject *obj = (GameObject *)malloc(sizeof(GameObject));
-  obj->type = type;
-  obj->y = y;
-  obj->x = x;
-  return obj;
-}
+#include "mod.h"
+#include "GameObject.h"
 
 // Создает игровой объект(GameObject) и помещает его в список в зависимости от типа type;
 void createGameObject(GameObjectType area[AREA_H][AREA_W], List *class, GameObjectType type, int x, int y) {

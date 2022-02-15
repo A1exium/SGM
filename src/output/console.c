@@ -2,7 +2,7 @@
 // Created by alexium on 11.02.2022.
 //
 
-#include "visual.h"
+#include "console.h"
 #include <stdio.h>
 
 void print(GameObjectType area[AREA_H][AREA_W]) {

@@ -1,9 +1,8 @@
 //
 // Created by alexium on 11.02.2022.
 //
-#include "visual.h"
-#include <stdio.h>
-#include "game.h"
+#include "output/mod.h"
+#include "game/mod.h"
 
 int main() {
 //  init_game(area, players, nishals);
