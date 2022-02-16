@@ -5,10 +5,12 @@
 #include "game/mod.h"
 
 int main() {
-//  init_game(area, players, nishals);
-  GameObjectType area[AREA_H][AREA_W];
-  List *players = List_new();
-  List *nishals = List_new();
+  Area area;
+  area_init(area);
+  ListGameObject *players = ListGameObject_new();
+  ListGameObject *nishals = ListGameObject_new();
   initGame(area, players, nishals);
   print(area);
+  listGameObject_free(players);
+  listGameObject_free(nishals);
 }

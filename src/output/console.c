@@ -5,11 +5,11 @@
 #include "console.h"
 #include <stdio.h>
 
-void print(GameObjectType area[AREA_H][AREA_W]) {
+void print(Area area) {
 
   for (int y = 0; y < AREA_H; y++) {
     for (int x = 0; x < AREA_W; x++) {
-      switch (area[y][x]) {
+      switch (gameObject_get_type(area[y][x])) {
         case Player:putchar('#');
           break;
         case Nishal:putchar('*');
