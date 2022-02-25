@@ -5,7 +5,8 @@
 #include "Area.h"
 
 void area_init(Area area) {
-  for (int y = 0; y < AREA_H; y++)
-    for (int x = 0; x < AREA_W; x++)
-      area[y][x] = 0;
+  for (int x = 0; x < AREA_MAX_X; x++)
+    for (int y = 0; y < AREA_MAX_Y; y++)
+      for (int z = 0; z < AREA_MAX_Z; z++)
+        area[x][y][z] = 0;
 }

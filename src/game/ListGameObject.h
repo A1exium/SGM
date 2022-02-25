@@ -1,6 +1,6 @@
-//
-// Здесь список (List из tools), но для работы с GameObject *, а не с void *
-//
+///
+/// Здесь двусвязный список (List из tools), но для работы с GameObject *, а не с void *
+///
 
 #ifndef SGM_SRC_GAME_LISTGAMEOBJECT_H_
 #define SGM_SRC_GAME_LISTGAMEOBJECT_H_
@@ -10,19 +10,34 @@
 
 typedef List ListGameObject;
 
-// Создает новый объект типа List и возвращает его
+/**
+ * Создает новый объект типа \b List и возвращает его
+ * @return Указатель на созданный \b List
+ */
 ListGameObject *ListGameObject_new();
 
-// Отчищает память списка.
-// Отчищает память всех его элементов, если их нет в area???
-// TODO
+/**
+ * Отчищает память списка. \n
+ * Отчищает память всех его элементов, если их нет в area???
+ * @param list Удаляемый список
+ * TODO
+ */
 void listGameObject_free(ListGameObject *list);
 
-// Добавляет GameObject * в список
+/**
+ * Добавляет GameObject * в список
+ * @param list Список, в который нужно добавить объект
+ * @param game_object Добавляемый объект
+ */
 void listGameObject_add(ListGameObject *list, GameObject *game_object);
 
-// Удаляет элемент из коллекции и возвращает его
-// TODO
+/**
+ * Удаляет элемент из коллекции и возвращает его
+ * @param list Коллекция, из которой нужно удалить объект
+ * @param game_object Удаляемый объект
+ * @return Удаляемый объект?????
+ * TODO
+ */
 GameObject *listGameObject_remove(ListGameObject *list, GameObject *game_object);
 
 #endif //SGM_SRC_GAME_LISTGAMEOBJECT_H_

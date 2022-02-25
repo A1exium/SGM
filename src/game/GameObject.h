@@ -1,38 +1,92 @@
-//
-// GameObject - основная структура объекта. Все, что существует в игре - это GameObject.
-//
+///
+/// Здесь Сама структура GameObject, И все функции для взаимодействия с ней
+///
 
 #ifndef SGM_SRC_GAME_GAMEOBJECT_H_
 #define SGM_SRC_GAME_GAMEOBJECT_H_
 
-// Всевозможные типы объектов
+//! Всевозможные типы объектов
 typedef enum GameObjectType_t {
   None,
   Player,
   Nishal,
 } GameObjectType;
 
+/** @struct s_GameObject GameObject.h GameObject.c
+ * Основная структура. Каждый объект в игре является \b GameObject
+ * @brief Содержит основную информацию об объекте.\n
+ * Свойства отдельных типов Должны храниться в отдельных структурах
+ */
+/** @enum GameObjectType
+ * - Все типы объектов перечислены здесь. \n
+ * Используется для Определения типа объекта и логики для properties
+ */
+/** @var void \b *properties
+ * - Здесь хранится указатель на структуру со свойствами объекта данного типа
+ */
+/** @var GameObjectType \b type
+ * - Тип объекта
+ */
+/** @var ListGameObject \b *group
+ * - Массив / Множество, где хранится объект помимо \b Area
+ */
+/** @var int \b x
+ * - Координата по \p x
+ */
+/** @var int \b y
+ * - Координата по \p y
+ */
+/** @var int \b z
+ * - Координата по \p z ИЛИ слой снизу вверх.
+ */
+/** @typedef GameObject
+ *  - Тип для удобного использования структуры
+ */
 struct s_GameObject;
 typedef struct s_GameObject GameObject;
 
-// Создает новый объект возвращает указатель на него
-GameObject *GameObject_new(GameObjectType type, int x, int y);
+/**
+ * Создает новый объект возвращает указатель на него
+ * @param type Тип нового объекта
+ * @param x координата x
+ * @param y координата y
+ * @param z слой.
+ * @return Указатель на созданный \b GameObject
+ */
+GameObject *GameObject_new(GameObjectType type, int x, int y, int z);
 
-// Освобождает память объекта, удаляет его из всех связанных с ним структур(из area, из group)
-// TODO
+/** Освобождает память объекта, удаляет его из всех связанных с ним структур(из area, из group)
+ *
+ * @param gameobject Игровой объект
+ * TODO
+ */
 void gameObject_free(GameObject *gameobject);
 
-// Возвращает тип объекта. Нужно для корректной работы других функций
+/**
+ * Возвращает тип объекта. Нужно для корректной работы других функций
+ * @param obj Сам объект
+ * @return Тип заданного объекта
+ */
 GameObjectType gameObject_get_type(GameObject *obj);
 
-// Двигает объект на дельту по координатам
-// Сигнатура может измениться
-// TODO
+/**
+ * Двигает объект на дельту по координатам в 2D пространстве\n
+ * <b>Сигнатура может измениться!</b>
+ * @param obj Объект, который нужно сдвинуть
+ * @param dx Сдвиг по x
+ * @param dy Сдвиг по y
+ * TODO
+ */
 void gameObject_move(GameObject *obj, int dx, int dy);
 
-// "Телепортирует" объект на координаты
-// Сигнатура может измениться
-// TODO
+/**
+ * "Телепортирует" объект на координаты
+ * Сигнатура может измениться
+ * @param obj Объект которому нужно поменять координаты
+ * @param x новая координата по x
+ * @param y новая координата по y
+ * TODO
+ */
 void gameObject_teleport(GameObject *obj, int x, int y);
 
 #endif //SGM_SRC_GAME_GAMEOBJECT_H_

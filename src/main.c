@@ -1,7 +1,7 @@
 //
 // Created by alexium on 11.02.2022.
 //
-#include "output/mod.h"
+#include "io/output/mod.h"
 #include "game/mod.h"
 
 int main() {

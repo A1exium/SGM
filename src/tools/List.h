@@ -1,6 +1,6 @@
-//
-// Created by alexium on 16.02.2022.
-//
+/**
+ * Здесь структура двусвязанного списка.
+ */
 
 #ifndef SGM_SRC_TOOLS_LIST_H_
 #define SGM_SRC_TOOLS_LIST_H_
