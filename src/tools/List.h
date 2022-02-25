@@ -8,37 +8,56 @@
 struct ListItem_s;
 typedef struct ListItem_s ListItem;
 
-// двусвязный список
+/** двусвязный список
+ */
 typedef struct List_s List;
 
-// Возвращает новый экземпляр списка
+/**
+ * Возвращает новый экземпляр списка
+ */
 ListItem *ListItem_new();
 
-// Возвращает следущий элемент в списке
+/**
+ * Возвращает следущий элемент в списке
+ */
 ListItem *list_next(ListItem *item);
 
-// Создает новый список и возвращает его
+/**
+ * Создает новый список и возвращает его
+ */
 List *List_new();
 
-// Удаляет список и все объекты в нем
+/**
+ * Удаляет список и все объекты в нем
+ */
 void list_free(List *list);
 
-// Добавляет ListItem в список
+/**
+ * Добавляет ListItem в список
+ */
 void list_add_item(List *list, ListItem *item);
 
-// Добавляет элемент в список
+/**
+ * Добавляет элемент в список
+ */
 void list_add(List *list, void *value);
 
-// Удаляет элемент из списка и возвращает его
 // TODO
+/**
+ * Удаляет элемент из списка и возвращает его
+ */
 ListItem *list_remove(ListItem *item);
 
-// Возвращает элемент под индексом index
 // TODO
+/**
+ * Возвращает элемент под индексом index
+ */
 ListItem *list_get(List list, int index);
 
-// Удаляет элемент под индексом index и возвращает его
-// tODO
+// TODO
+/**
+ * Удаляет элемент под индексом index и возвращает его
+ */
 ListItem *list_pop(List list, int index);
 
 #endif //SGM_SRC_TOOLS_LIST_H_
