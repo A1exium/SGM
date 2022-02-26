@@ -42,20 +42,20 @@ void list_add_item(List *list, ListItem *item);
  */
 void list_add(List *list, void *value);
 
-// TODO
 /**
+ * TODO
  * Удаляет элемент из списка и возвращает его
  */
 ListItem *list_remove(ListItem *item);
 
-// TODO
 /**
+ * TODO
  * Возвращает элемент под индексом index
  */
 ListItem *list_get(List list, int index);
 
-// TODO
 /**
+ * TODO
  * Удаляет элемент под индексом index и возвращает его
  */
 ListItem *list_pop(List list, int index);

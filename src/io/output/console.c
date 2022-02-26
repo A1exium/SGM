@@ -20,8 +20,8 @@ void print(Area area) {
               break;
           }
         }
-        putchar('\n');
       }
+    putchar('\n');
 //    }
   }
 }

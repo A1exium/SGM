@@ -55,10 +55,10 @@ typedef struct s_GameObject GameObject;
  */
 GameObject *GameObject_new(GameObjectType type, int x, int y, int z);
 
-/** Освобождает память объекта, удаляет его из всех связанных с ним структур(из area, из group)
- *
- * @param gameobject Игровой объект
+/**
  * TODO
+ * Освобождает память объекта, удаляет его из всех связанных с ним структур(из area, из group)
+ * @param gameobject Игровой объект
  */
 void gameObject_free(GameObject *gameobject);
 
@@ -70,22 +70,22 @@ void gameObject_free(GameObject *gameobject);
 GameObjectType gameObject_get_type(GameObject *obj);
 
 /**
+ * TODO
  * Двигает объект на дельту по координатам в 2D пространстве\n
  * <b>Сигнатура может измениться!</b>
  * @param obj Объект, который нужно сдвинуть
  * @param dx Сдвиг по x
  * @param dy Сдвиг по y
- * TODO
  */
 void gameObject_move(GameObject *obj, int dx, int dy);
 
 /**
+ * TODO
  * "Телепортирует" объект на координаты
  * Сигнатура может измениться
  * @param obj Объект которому нужно поменять координаты
  * @param x новая координата по x
  * @param y новая координата по y
- * TODO
  */
 void gameObject_teleport(GameObject *obj, int x, int y);
 

@@ -24,13 +24,13 @@ typedef GameObject *Area[AREA_MAX_X][AREA_MAX_Y][AREA_MAX_Z];
 extern void Area_init(Area area);
 
 /**
+ * TODO
  * Добавляет GameObject на координаты (x, y)ю
  * Проверяет, есть ли там еще элемент. Если есть и у него НЕТ группы - отчищает память с ним.
  * Иначе заменяет его координаты
  * @param area Поле, на которое нужно добавить объект
  * @param game_object Добавляемый объект
  * @param z слой, на который нужно добавить обхект
- * TODO
  */
 void Area_insert_GameObject(Area area, GameObject *game_object, int z);
 
