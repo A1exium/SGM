@@ -6,7 +6,7 @@
 #define SGM_SRC_GAME_AREA_H_
 
 #include "GameObject.h"
-#include "../const.h"
+#include "../../globals/const.h"
 
 /// TODO: Дополнить + сделать красивее
 /// <hr>

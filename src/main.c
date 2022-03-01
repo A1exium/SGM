@@ -1,12 +1,11 @@
 //
 // Created by alexium on 11.02.2022.
 //
-#include "io/output/mod.h"
-#include "game/mod.h"
+#include "./engine/renders/terminal/mod.h"
+#include "engine/objects/mod.h"
 
 int main() {
   Area area;
-  area_init(area);
   ListGameObject *players = ListGameObject_new();
   ListGameObject *nishals = ListGameObject_new();
   initGame(area, players, nishals);

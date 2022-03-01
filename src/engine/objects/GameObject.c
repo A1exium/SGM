@@ -5,7 +5,7 @@
 #include "GameObject.h"
 #include <stdlib.h>
 #include "ListGameObject.h"
-#include "Position.h"
+#include "../geometry/Position.h"
 
 struct s_GameObject {
   GameObjectType type;

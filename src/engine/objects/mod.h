@@ -8,7 +8,7 @@
 
 #include "GameObject.h"
 #include "ListGameObject.h"
-#include "../const.h"
+#include "../../globals/const.h"
 #include "Area.h"
 
 /**
