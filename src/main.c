@@ -4,6 +4,9 @@
 #include "./engine/renders/terminal/mod.h"
 #include "engine/objects/mod.h"
 
+
+// ADMIN LOH
+
 int main() {
   Area area;
   ListGameObject *players = ListGameObject_new();
