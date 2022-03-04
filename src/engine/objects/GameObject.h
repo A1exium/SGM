@@ -8,6 +8,7 @@
 //! Всевозможные типы объектов
 typedef enum GameObjectType_t {
   None,
+  Tile,
   Player,
   Nishal,
 } GameObjectType;
@@ -67,7 +68,7 @@ void gameObject_free(GameObject *gameobject);
  * @param obj Сам объект
  * @return Тип заданного объекта
  */
-GameObjectType gameObject_get_type(GameObject *obj);
+extern GameObjectType gameObject_get_type(GameObject *obj);
 
 /**
  * TODO

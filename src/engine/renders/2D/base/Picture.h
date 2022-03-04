@@ -7,6 +7,11 @@
 
 #include "../default/Pixel.h"
 
-typedef Pixel *Picture;
+typedef Pixel **Picture;
 
+extern Picture Picture_new(int width, int height);
+
+extern Pixel Picture_get_pixel(Picture picture, int x, int y);
+
+extern Pixel *Picture_get_pixel_mut(Picture picture, int x, int y);
 #endif //SGM_SRC_ENGINE_RENDERS_2D_SCREEN_PICTURE_H_

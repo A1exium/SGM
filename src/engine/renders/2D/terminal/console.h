@@ -5,13 +5,16 @@
 #define SGM_CMAKE_BUILD_DEBUG_VISUAL_H_
 
 #include "../../../objects/Area.h"
+#include "../base/Picture.h"
+#include "../default/Pixel.h"
 
 /**
- * TODO: Переделать. См curses.h
  * <hr>
  * Выводит поле на экран
  * @param area Выводимое поле
+ * @param height Размер выводимого изображения
+ * @param width Размер выводимого изображения
  */
-extern void print(Area area);
+extern void print(Picture pic, int height, int width);
 
 #endif //SGM_CMAKE_BUILD_DEBUG_VISUAL_H_

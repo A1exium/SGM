@@ -4,8 +4,10 @@
 
 #include "Pixel.h"
 
-struct Pixel_s {
-  unsigned char r;
-  unsigned char g;
-  unsigned char b;
-};
+Pixel Pixel_new(byte r, byte g, byte b) {
+  Pixel pix;
+  pix.r = r;
+  pix.g = g;
+  pix.b = b;
+  return pix;
+}

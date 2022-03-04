@@ -3,7 +3,6 @@
 //
 
 #include "View.h"
-#include "../../../geometry/Position.h"
 #include <stdlib.h>
 
 struct View_s {
@@ -20,4 +19,20 @@ View *View_new(Area *area, int x, int y, int width, int height) {
   view->area = area;
   view->width = width;
   return view;
+}
+
+Position View_get_pos(View *view) {
+  return view->pos;
+}
+
+int View_get_width(View *view) {
+  return view->width;
+}
+
+int View_get_height(View *view) {
+  return view->height;
+}
+
+extern GameObject *View_get_GameObject(View *view, int x, int y, int z) {
+  return (*view->area)[x][y][z];
 }
