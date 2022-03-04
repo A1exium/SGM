@@ -1,7 +1,7 @@
 //
 // Created by alexium on 11.02.2022.
 //
-#include "./engine/renders/terminal/mod.h"
+#include "./engine/renders/2D/terminal/mod.h"
 #include "engine/objects/mod.h"
 
 

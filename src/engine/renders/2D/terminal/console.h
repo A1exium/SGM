@@ -4,7 +4,7 @@
 #ifndef SGM_CMAKE_BUILD_DEBUG_VISUAL_H_
 #define SGM_CMAKE_BUILD_DEBUG_VISUAL_H_
 
-#include "../../objects/Area.h"
+#include "../../../objects/Area.h"
 
 /**
  * TODO: Переделать. См curses.h
