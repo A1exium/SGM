@@ -6,6 +6,7 @@
 
 
 // ADMIN LOH
+// Second dev tozhe loh.
 
 int main() {
   Area area;
