@@ -23,9 +23,9 @@ void initGame(Area area, List *players, List *nishals) {
   for (int y = 0; y < AREA_MAX_X; y++) {
     for (int x = 0; x < AREA_MAX_Y; x++) {
       createGameObject(Tile, x, y, 0, area, 0);
-      if ((x + y) % 7)
+      if ((x + y) % 11)
       createGameObject(Nishal, x, y, 1, area, 0);
     }
   }
-  createGameObject(Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 0, area, 0);
+  createGameObject(Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 1, area, 0);
 }

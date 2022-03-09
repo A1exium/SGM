@@ -26,6 +26,6 @@ GameObjectType gameObject_get_type(GameObject *obj) {
   return obj->type;
 }
 
-GameObjectType gameObject_set_type(GameObject *obj, GameObjectType new_type) {
+void gameObject_set_type(GameObject *obj, GameObjectType new_type) {
   obj->type = new_type;
 }

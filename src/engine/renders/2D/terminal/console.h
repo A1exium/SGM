@@ -6,7 +6,7 @@
 
 #include "../../../objects/Area.h"
 #include "../base/Picture.h"
-#include "../default/Pixel.h"
+#include "Pixel.h"
 
 /**
  * <hr>
