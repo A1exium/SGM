@@ -3,7 +3,7 @@
 //
 
 #include "Pixel.h"
-#include "ascii_colors.h"
+#include "renders/2D/terminal/win/ascii_colors.h"
 
 Pixel Pixel_from(char sym, enum Colors color, enum Colors bg_color) {
   if (sym == 0) {

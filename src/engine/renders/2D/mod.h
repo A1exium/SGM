@@ -9,4 +9,6 @@
 #include "base/Render.h"
 #include "base/View.h"
 
+extern void initCurrentRender();
+
 #endif //SGM_SRC_ENGINE_RENDERS_2D_MOD_H_

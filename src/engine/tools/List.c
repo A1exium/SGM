@@ -16,7 +16,9 @@ struct List_s {
 };
 
 List *List_new() {
-  return (List *) malloc(sizeof(List));
+  List *list = (List *) malloc(sizeof(List));
+  list->head = 0;
+  return list;
 }
 
 void ListItem_free(ListItem *list_item) {
@@ -32,6 +34,8 @@ void List_free(List *list) {
 ListItem *ListItem_new(void *value) {
   ListItem *item = (ListItem *)malloc(sizeof(ListItem));
   item->value = value;
+  item->next = 0;
+  item->prev = 0;
   return item;
 }
 

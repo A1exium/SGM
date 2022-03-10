@@ -5,11 +5,11 @@
 #ifndef SGM_SRC_ENGINE_RENDERS_2D_TERMINAL_ASCII_COLORS_H_
 #define SGM_SRC_ENGINE_RENDERS_2D_TERMINAL_ASCII_COLORS_H_
 //Regular text
-#define BLK "\e[0;30m"
-#define RED "\e[0;31m"
-#define GRN "\e[0;32m"
+#define BLK "\e[30m"
+#define RED "\e[31m"
+#define GRN "\e[32m"
 #define YEL "\e[0;33m"
-#define BLU "\e[0;34m"
+#define BLU "\e[34m"
 #define MAG "\e[0;35m"
 #define CYN "\e[0;36m"
 #define WHT "\e[0;37m"

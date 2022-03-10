@@ -2,6 +2,7 @@
 // Created by alexium on 11.03.2022.
 //
 
+#include <stdlib.h>
 #include "engine.h"
 
 void initGame(ListGameObject players, ListGameObject nishals, Area area) {
@@ -17,6 +18,8 @@ void initGame(ListGameObject players, ListGameObject nishals, Area area) {
 }
 
 void start_game() {
+//  SetConsoleMode()
+  initCurrentRender();
   Area area;
   Area_init(area);
   ListGameObject players = ListGameObject_new();
