@@ -8,7 +8,7 @@
 
 #include "GameObject.h"
 #include "ListGameObject.h"
-#include "../../globals/const.h"
+#include "const.h"
 #include "Area.h"
 
 /**
@@ -20,15 +20,6 @@
  * @param class Список указателей на GameObject - Может быть Null(0).
  * @return возвращает указатель на созданный объект;
  */
-extern GameObject *createGameObject(GameObjectType type, int x, int y, int z, Area area, ListGameObject *group);
-
-/**
- * Инициализирует все нужные Структуры и объекты
- * Может дополняться
- * @param area Инициализаруемое поле
- * @param players Список игроков
- * @param nishals Список ботов
- */
-extern void initGame(Area area, List *players, List *nishals);
+extern GameObject *createObject(GameObjectType type, int x, int y, int z, Area area, ListGameObject group);
 
 #endif //SGM_SRC_GAME_MOD_H_

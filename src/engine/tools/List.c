@@ -19,13 +19,13 @@ List *List_new() {
   return (List *) malloc(sizeof(List));
 }
 
-void listItem_free(ListItem *list_item) {
-  if (list_item->next) listItem_free(list_item->next);
+void ListItem_free(ListItem *list_item) {
+  if (list_item->next) ListItem_free(list_item->next);
   free(list_item);
 }
 
-void list_free(List *list) {
-  if (list->head) listItem_free(list->head);
+void List_free(List *list) {
+  if (list->head) ListItem_free(list->head);
   free(list);
 }
 
@@ -35,7 +35,7 @@ ListItem *ListItem_new(void *value) {
   return item;
 }
 
-void list_add_item(List *list, ListItem *item) {
+void List_add_item(List *list, ListItem *item) {
   if (list->head) {
     ListItem *insertion_item = list->head;
     while (insertion_item->next) {
@@ -48,10 +48,19 @@ void list_add_item(List *list, ListItem *item) {
   }
 }
 
-void list_add(List *list, void *value) {
-  list_add_item(list, ListItem_new(value));
+void List_add(List *list, void *value) {
+  List_add_item(list, ListItem_new(value));
 }
 
-ListItem *list_next(ListItem *item) {
+ListItem *List_first(List *list) {
+  return list->head;
+}
+
+ListItem *List_next(ListItem *item) {
   return item->next;
 }
+
+void *ListItem_get(ListItem *item) {
+  return item->value;
+}
+

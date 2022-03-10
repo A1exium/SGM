@@ -2,7 +2,7 @@
 // Created by alexium on 06.03.2022.
 //
 
-#include "../default/Texture.h"
+#include "Texture.h"
 #include "../../../tools/2DArray.h"
 #include "Pixel.h"
 
@@ -27,6 +27,10 @@ Pixel Texture_get_pixel(Texture *texture, int x, int y) {
   return texture->pix[x][y];
 }
 
+Pixel *Texture_get_pixel_ptr(Texture *texture, int x, int y) {
+  return &texture->pix[x][y];
+}
+
 extern Texture *Texture_load(FILE *file) {
   int w, h;
   fscanf(file, "%d %d", &w, &h);
@@ -34,8 +38,8 @@ extern Texture *Texture_load(FILE *file) {
   Texture *txt = Texture_new(w, h);
   txt->height = h;
   txt->width = w;
-  for (int y = 0; y < w; y++) {
-    for (int x = 0; x < h; x++) {
+  for (int x = 0; x < w; x++) {
+    for (int y = 0; y < h; y++) {
       char sym;
       int color, bg_color;
       fscanf(file, "-%c-%d-%d", &sym, &color, &bg_color);

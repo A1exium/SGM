@@ -5,7 +5,16 @@
 #ifndef SGM_SRC_ENGINE_RENDERS_2D_TERMINAL_PIXEL_H_
 #define SGM_SRC_ENGINE_RENDERS_2D_TERMINAL_PIXEL_H_
 
-#include "../default/Pixel.h"
+struct Pixel_s;
+typedef struct Pixel_s Pixel;
+
+enum Colors {
+  Transparent,
+  Black,
+  Red,
+  Green,
+  Blue
+};
 
 struct Pixel_s {
   char symbol;

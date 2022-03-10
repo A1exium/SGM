@@ -5,7 +5,6 @@
 #include "Pixel.h"
 #include "ascii_colors.h"
 
-
 Pixel Pixel_from(char sym, enum Colors color, enum Colors bg_color) {
   if (sym == 0) {
     sym = ' ';
@@ -59,7 +58,3 @@ Pixel Pixel_from(char sym, enum Colors color, enum Colors bg_color) {
 int Pixel_is_empty(Pixel *pix) {
   return pix->color == Transparent && pix->bg_color == Transparent;
 }
-
-//Pixel Pixel_new() {
-//  return Pixel_from_color(Black);
-//}

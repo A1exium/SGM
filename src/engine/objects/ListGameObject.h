@@ -8,13 +8,13 @@
 #include "../tools/List.h"
 #include "GameObject.h"
 
-typedef List ListGameObject;
+typedef List *ListGameObject;
 
 /**
  * Создает новый объект типа \b List и возвращает его
  * @return Указатель на созданный \b List
  */
-ListGameObject *ListGameObject_new();
+ListGameObject ListGameObject_new();
 
 /**
  * TODO
@@ -22,14 +22,14 @@ ListGameObject *ListGameObject_new();
  * Отчищает память всех его элементов, если их нет в area???
  * @param list Удаляемый список
  */
-void listGameObject_free(ListGameObject *list);
+extern void ListGameObject_free(ListGameObject list);
 
 /**
  * Добавляет GameObject * в список
  * @param list Список, в который нужно добавить объект
  * @param game_object Добавляемый объект
  */
-void listGameObject_add(ListGameObject *list, GameObject *game_object);
+extern void ListGameObject_add(ListGameObject list, GameObject *game_object);
 
 /**
  * TODO
@@ -38,6 +38,6 @@ void listGameObject_add(ListGameObject *list, GameObject *game_object);
  * @param game_object Удаляемый объект
  * @return Удаляемый объект?????
  */
-GameObject *listGameObject_remove(ListGameObject *list, GameObject *game_object);
+extern GameObject *ListGameObject_remove(ListGameObject list, GameObject *game_object);
 
 #endif //SGM_SRC_GAME_LISTGAMEOBJECT_H_

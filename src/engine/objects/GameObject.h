@@ -6,6 +6,8 @@
 #define SGM_SRC_GAME_GAMEOBJECT_H_
 
 //! Всевозможные типы объектов
+enum GameObjectType_t;
+//typedef enum GameObjectType_t GameObjectType;
 typedef enum GameObjectType_t {
   None,
   Tile,
@@ -54,14 +56,14 @@ typedef struct s_GameObject GameObject;
  * @param z слой.
  * @return Указатель на созданный \b GameObject
  */
-GameObject *GameObject_new(GameObjectType type, int x, int y, int z);
+extern GameObject *GameObject_new(GameObjectType type, int x, int y, int z);
 
 /**
  * TODO
  * Освобождает память объекта, удаляет его из всех связанных с ним структур(из area, из group)
  * @param gameobject Игровой объект
  */
-void gameObject_free(GameObject *gameobject);
+extern void GameObject_free(GameObject *gameobject);
 
 /**
  * Возвращает тип объекта. Нужно для корректной работы других функций
@@ -78,7 +80,7 @@ extern GameObjectType gameObject_get_type(GameObject *obj);
  * @param dx Сдвиг по x
  * @param dy Сдвиг по y
  */
-void gameObject_move(GameObject *obj, int dx, int dy);
+extern void GameObject_move(GameObject *obj, int dx, int dy);
 
 /**
  * TODO
@@ -88,6 +90,6 @@ void gameObject_move(GameObject *obj, int dx, int dy);
  * @param x новая координата по x
  * @param y новая координата по y
  */
-void gameObject_teleport(GameObject *obj, int x, int y);
+extern void GameObject_teleport(GameObject *obj, int x, int y);
 
 #endif //SGM_SRC_GAME_GAMEOBJECT_H_

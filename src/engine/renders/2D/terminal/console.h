@@ -5,7 +5,7 @@
 #define SGM_CMAKE_BUILD_DEBUG_VISUAL_H_
 
 #include "../../../objects/Area.h"
-#include "../base/Picture.h"
+#include "Picture.h"
 #include "Pixel.h"
 
 /**
