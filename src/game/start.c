@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include "engine.h"
 
+enum GameObjectType_t {
+  None,
+  Tile,
+  Player,
+  Nishal,
+};
+
 void initGame(ListGameObject players, ListGameObject nishals, Area area) {
   for (int x = 0; x < AREA_MAX_X; x++) {
     for (int y = 0; y < AREA_MAX_Y; y++) {
