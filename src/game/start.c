@@ -35,5 +35,21 @@ void start_game() {
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
   Render *render = Render_new(game_screen, AREA_MAX_X * 3, AREA_MAX_Y * 3);
-  Render_render(render);
+#include <stdio.h>
+  int ch;
+  do {
+    render_render(render);
+    int ch = getchar();
+      int dx = 0, dy = 0;
+      if (ch == 'w')
+        dy = 1;
+      if (ch == 's')
+        dy = -1;
+      if (ch == 'a')
+        dx = -1;
+      if (ch == 'd')
+        dx = 1;
+
+      area_GameObject_move(listItem_get(list_first(players)), area, dx, dy);
+  } while (ch != 'q');
 }
