@@ -34,7 +34,7 @@ var Module = typeof Module !== 'undefined' ? Module : {};
       } else {
         throw 'using preloaded data can only be done on a web page or in a web worker';
       }
-      var PACKAGE_NAME = '../www/index.data';
+      var PACKAGE_NAME = '../index.data';
       var REMOTE_PACKAGE_BASE = 'index.data';
       if (typeof Module['locateFilePackage'] === 'function' && !Module['locateFile']) {
         Module['locateFile'] = Module['locateFilePackage'];
@@ -163,10 +163,10 @@ var Module = typeof Module !== 'undefined' ? Module : {};
             for (var i = 0; i < files.length; ++i) {
               DataRequest.prototype.requests[files[i].filename].onload();
             }
-                Module['removeRunDependency']('datafile_../www/index.data');
+                Module['removeRunDependency']('datafile_../index.data');
 
       };
-      Module['addRunDependency']('datafile_../www/index.data');
+      Module['addRunDependency']('datafile_../index.data');
     
       if (!Module.preloadResults) Module.preloadResults = {};
     
@@ -187,7 +187,7 @@ var Module = typeof Module !== 'undefined' ? Module : {};
     }
   
    }
-   loadPackage({"files": [{"filename": "/assets/nishal.nsd", "start": 0, "end": 60, "audio": 0}, {"filename": "/assets/none.nsd", "start": 60, "end": 120, "audio": 0}, {"filename": "/assets/player.nsd", "start": 120, "end": 180, "audio": 0}, {"filename": "/assets/tile.nsd", "start": 180, "end": 240, "audio": 0}], "remote_package_size": 240, "package_uuid": "6b869a3d-7fe2-42a7-8c85-9ecda0d7dcb6"});
+   loadPackage({"files": [{"filename": "/assets/nishal.nsd", "start": 0, "end": 60, "audio": 0}, {"filename": "/assets/none.nsd", "start": 60, "end": 120, "audio": 0}, {"filename": "/assets/player.nsd", "start": 120, "end": 180, "audio": 0}, {"filename": "/assets/tile.nsd", "start": 180, "end": 240, "audio": 0}], "remote_package_size": 240, "package_uuid": "86ec9498-2c8a-4947-8450-508e4243e1c4"});
   
   })();
   

@@ -25,22 +25,13 @@ ELSE()
 ENDIF()
 
 IF(EMSCRIPTEN)
-
-    set_target_properties(SGM
-            PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/www)
-
-    set_target_properties(SGM
-            PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/www)
-
     set_target_properties(SGM PROPERTIES OUTPUT_NAME "index")
-ELSE()
-    set_target_properties(SGM
-            PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR})
-
-    set_target_properties(SGM
-            PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 ENDIF()
+
+set_target_properties(SGM
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR})
+
+set_target_properties(SGM
+        PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
