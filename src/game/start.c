@@ -15,10 +15,10 @@ enum GameObjectType_t {
 
 TextureStorage LoadTextures() {
   TextureStorage storage = TextureStorage_new(4);
-  textureStorage_insert(storage, Player, Texture_load(fopen("../assets/player.nsd", "r")));
-  textureStorage_insert(storage, Nishal, Texture_load(fopen("../assets/nishal.nsd", "r")));
-  textureStorage_insert(storage, Tile, Texture_load(fopen("../assets/tile.nsd", "r")));
-  textureStorage_insert(storage, None, Texture_load(fopen("../assets/none.nsd", "r")));
+  textureStorage_insert(storage, Player, Texture_load(fopen("assets/player.nsd", "r")));
+  textureStorage_insert(storage, Nishal, Texture_load(fopen("assets/nishal.nsd", "r")));
+  textureStorage_insert(storage, Tile, Texture_load(fopen("assets/tile.nsd", "r")));
+  textureStorage_insert(storage, None, Texture_load(fopen("assets/none.nsd", "r")));
   return storage;
 }
 
