@@ -47,22 +47,22 @@ void start_game() {
   Render *render = Render_new(game_screen, LoadTextures(), AREA_MAX_X * 3, AREA_MAX_Y * 3);
   listItem_get(list_first(players));
 
-#include <stdio.h>
+//#include <stdio.h>
   render_render(render);
-  int ch = getchar();
-  while (ch != 'q') {
-    int dx = 0, dy = 0;
-    if (ch == 'w')
-      dy = -1;
-    if (ch == 's')
-      dy = 1;
-    if (ch == 'a')
-      dx = -1;
-    if (ch == 'd')
-      dx = 1;
-
-    area_GameObject_move(listItem_get(list_first(players)), area, dx, dy, 0);
-    render_render(render);
-    ch = getchar();
-  }
+//  int ch = getchar();
+//  while (ch != 'q') {
+//    int dx = 0, dy = 0;
+//    if (ch == 'w')
+//      dy = -1;
+//    if (ch == 's')
+//      dy = 1;
+//    if (ch == 'a')
+//      dx = -1;
+//    if (ch == 'd')
+//      dx = 1;
+//
+//    area_GameObject_move(listItem_get(list_first(players)), area, dx, dy, 0);
+//    render_render(render);
+//    ch = getchar();
+//  }
 }
