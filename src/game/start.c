@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 #include "engine.h"
-#include "renders/2D/terminal/Texture.h"
 
 enum GameObjectType_t {
   None,
@@ -13,14 +12,43 @@ enum GameObjectType_t {
   Nishal,
 };
 
-TextureStorage LoadTextures() {
+#include "../engine/renders/2D/sdl/Texture.h"
+
+void doInput(void)
+{
+  SDL_Event event;
+
+  while (SDL_PollEvent(&event))
+  {
+    switch (event.type)
+    {
+      case SDL_QUIT:
+        exit(0);
+        break;
+
+      default:
+        break;
+    }
+  }
+}
+
+TextureStorage LoadTextures_png(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
-  textureStorage_insert(storage, Player, Texture_load(fopen("assets/player.nsd", "r")));
-  textureStorage_insert(storage, Nishal, Texture_load(fopen("assets/nishal.nsd", "r")));
-  textureStorage_insert(storage, Tile, Texture_load(fopen("assets/tile.nsd", "r")));
-  textureStorage_insert(storage, None, Texture_load(fopen("assets/none.nsd", "r")));
+  textureStorage_insert(storage, Player, Texture_load("assets/player.png", render));
+  textureStorage_insert(storage, Nishal, Texture_load("assets/nishal.png", render));
+  textureStorage_insert(storage, Tile, Texture_load("assets/tile.png", render));
+  textureStorage_insert(storage, None, Texture_load("assets/none.png", render));
   return storage;
 }
+
+//TextureStorage LoadTextures_nsd() {
+//  TextureStorage storage = TextureStorage_new(4);
+//  textureStorage_insert(storage, Player, Texture_load("assets/player.nsd"));
+//  textureStorage_insert(storage, Nishal, Texture_load("assets/nishal.nsd"));
+//  textureStorage_insert(storage, Tile, Texture_load("assets/tile.nsd"));
+//  textureStorage_insert(storage, None, Texture_load("assets/none.nsd"));
+//  return storage;
+//}
 
 void initGame(ListGameObject players, ListGameObject nishals, Area area) {
   for (int x = 0; x < AREA_MAX_X; x++) {
@@ -44,25 +72,13 @@ void start_game() {
   initGame(players, nishals, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, LoadTextures(), AREA_MAX_X * 3, AREA_MAX_Y * 3);
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 100, AREA_MAX_Y * 100);
+  render_set_textureStorage(render, LoadTextures_png(render));
   listItem_get(list_first(players));
 
-//#include <stdio.h>
-  render_render(render);
-//  int ch = getchar();
-//  while (ch != 'q') {
-//    int dx = 0, dy = 0;
-//    if (ch == 'w')
-//      dy = -1;
-//    if (ch == 's')
-//      dy = 1;
-//    if (ch == 'a')
-//      dx = -1;
-//    if (ch == 'd')
-//      dx = 1;
-//
-//    area_GameObject_move(listItem_get(list_first(players)), area, dx, dy, 0);
-//    render_render(render);
-//    ch = getchar();
-//  }
+  while (1) {
+    render_render(render);
+    doInput();
+    SDL_Delay(16);
+  }
 }
