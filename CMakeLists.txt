@@ -16,6 +16,7 @@ ENDIF()
 add_executable(SGM src/main.c src/game/start.c src/globals/const.h)
 add_subdirectory(src/engine)
 target_link_libraries(SGM NHE)
+#add_dependencies(SGM NHE)
 
 target_include_directories(SGM PUBLIC src/engine/tools)
 target_include_directories(SGM PUBLIC src/engine)
