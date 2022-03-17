@@ -5,7 +5,7 @@
 #ifndef SGM__CONST_H_
 #define SGM__CONST_H_
 
-#define AREA_MAX_X 5
+#define AREA_MAX_X 10
 #define AREA_MAX_Y 5
 #define AREA_MAX_Z 2
 #define MAX_NISHALS 50

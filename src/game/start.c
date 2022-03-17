@@ -13,10 +13,9 @@ enum GameObjectType_t {
   Nishal,
 };
 
-void doInput(void)
+void doInput()
 {
   SDL_Event event;
-
   while (SDL_PollEvent(&event))
   {
     switch (event.type)
@@ -52,6 +51,7 @@ void initGame(ListGameObject players, ListGameObject nishals, Area area) {
   createObject(Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 1, area, players);
 }
 
+
 void start_game() {
 //  SetConsoleMode()
   initCurrentRender();
@@ -64,12 +64,28 @@ void start_game() {
   Screen game_screen = Screen_new(global_view);
   Render *render = Render_new(game_screen, 0, AREA_MAX_X * 100, AREA_MAX_Y * 100);
   render_set_textureStorage(render, LoadTextures(render));
-  listItem_get(list_first(players));
+  GameObject *player = listItem_get(list_first(players));
 
-  render_render(render);
-//  while (1) {
-//  render_render(render);
-//    doInput();
-//    SDL_Delay(16);
-//  }
+//  SDL_AddTimer(100, Render_timer, render);
+//  void *params[] = {player, &area, &dx, &dy};
+  int dx = 1, dy = 1;
+  while (1) {
+    render_render(render);
+    Position player_pos = gameObject_get_pos(player);
+    int cx = player_pos.x, cy = player_pos.y;
+    if (cx == AREA_MAX_X - 1 || cx == 0) {
+      dx *= -1;
+    }
+    if (cy == AREA_MAX_Y - 1 || cy == 0) {
+      dy *= -1;
+    }
+    area_GameObject_move(player, area, dx, dy, 0);
+    doInput();
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+    emscripten_sleep(1000);
+#else
+    SDL_Delay(1000);
+#endif
+  }
 }

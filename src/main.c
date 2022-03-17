@@ -12,5 +12,10 @@
 extern void start_game();
 
 int main() {
+//#ifdef __EMSCRIPTEN__
+//#include <emscripten.h>
+//  emscripten_set_main_loop(start_game, 60, 1);
+//#else
   start_game();
+//#endif
 }
