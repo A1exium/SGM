@@ -31,7 +31,7 @@ void doInput(void)
   }
 }
 
-TextureStorage LoadTextures_png(Render *render) {
+TextureStorage LoadTextures(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
   textureStorage_insert(storage, Player, Texture_load(render, "assets/player.png"));
   textureStorage_insert(storage, Nishal, Texture_load(render, "assets/nishal.png"));
@@ -39,15 +39,6 @@ TextureStorage LoadTextures_png(Render *render) {
   textureStorage_insert(storage, None, Texture_load(render, "assets/none.png"));
   return storage;
 }
-
-//TextureStorage LoadTextures_nsd() {
-//  TextureStorage storage = TextureStorage_new(4);
-//  textureStorage_insert(storage, Player, Texture_load("assets/player.nsd"));
-//  textureStorage_insert(storage, Nishal, Texture_load("assets/nishal.nsd"));
-//  textureStorage_insert(storage, Tile, Texture_load("assets/tile.nsd"));
-//  textureStorage_insert(storage, None, Texture_load("assets/none.nsd"));
-//  return storage;
-//}
 
 void initGame(ListGameObject players, ListGameObject nishals, Area area) {
   for (int x = 0; x < AREA_MAX_X; x++) {
@@ -72,12 +63,13 @@ void start_game() {
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
   Render *render = Render_new(game_screen, 0, AREA_MAX_X * 100, AREA_MAX_Y * 100);
-  render_set_textureStorage(render, LoadTextures_png(render));
+  render_set_textureStorage(render, LoadTextures(render));
   listItem_get(list_first(players));
 
-  while (1) {
-    render_render(render);
-    doInput();
-    SDL_Delay(16);
-  }
+  render_render(render);
+//  while (1) {
+//  render_render(render);
+//    doInput();
+//    SDL_Delay(16);
+//  }
 }
