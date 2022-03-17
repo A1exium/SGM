@@ -32,10 +32,10 @@ enum GameObjectType_t {
 
 TextureStorage LoadTextures(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
-  textureStorage_insert(storage, Player, Texture_load(render, "assets/player.tga"));
-  textureStorage_insert(storage, Nishal, Texture_load(render, "assets/nishal.tga"));
-  textureStorage_insert(storage, Tile, Texture_load(render, "assets/tile.tga"));
-  textureStorage_insert(storage, None, Texture_load(render, "assets/none.tga"));
+  textureStorage_insert(storage, Player, Texture_load(render, "assets/player"));
+  textureStorage_insert(storage, Nishal, Texture_load(render, "assets/nishal"));
+  textureStorage_insert(storage, Tile, Texture_load(render, "assets/tile"));
+  textureStorage_insert(storage, None, Texture_load(render, "assets/none"));
   return storage;
 }
 
@@ -62,7 +62,7 @@ void start_game() {
   initGame(players, nishals, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 100, AREA_MAX_Y * 100);
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 50, AREA_MAX_Y * 50);
   render_set_textureStorage(render, LoadTextures(render));
   GameObject *player = listItem_get(list_first(players));
 

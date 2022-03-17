@@ -15,10 +15,13 @@ target_include_directories(SGM PUBLIC src/globals)
 if(EMSCRIPTEN)
     message("Compiling to web!")
     set(CMAKE_EXECUTABLE_SUFFIX .html)
-    target_link_options(SGM PRIVATE -sWASM -sALLOW_MEMORY_GROWTH)
+    target_link_options(SGM PRIVATE -sWASM -sALLOW_MEMORY_GROWTH -sASYNCIFY)
     target_link_options(SGM PRIVATE --preload-file ../assets/)
     set_target_properties(SGM PROPERTIES OUTPUT_NAME "index")
 ENDIF()
+
+target_compile_options(SGM PUBLIC -O3)
+target_link_options(SGM PUBLIC -O3)
 
 set_target_properties(SGM
         PROPERTIES
