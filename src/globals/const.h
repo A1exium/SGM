@@ -7,7 +7,7 @@
 
 #define AREA_MAX_X 10
 #define AREA_MAX_Y 5
-#define AREA_MAX_Z 2
+#define AREA_MAX_Z 3
 #define MAX_NISHALS 50
 #define MAX_PLAYERS 2
 
