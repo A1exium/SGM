@@ -2,9 +2,9 @@
 // Created by alexium on 11.03.2022.
 //
 
-#include <stdlib.h>
 #include "engine.h"
-#include <SDL2/SDL.h>
+#include <unistd.h>
+//#include <SDL2/SDL.h>
 
 enum GameObjectType_t {
   None,
@@ -13,22 +13,22 @@ enum GameObjectType_t {
   Nishal,
 };
 
-void doInput()
-{
-  SDL_Event event;
-  while (SDL_PollEvent(&event))
-  {
-    switch (event.type)
-    {
-      case SDL_QUIT:
-        exit(0);
-        break;
-
-      default:
-        break;
-    }
-  }
-}
+//void doInput()
+//{
+//  SDL_Event event;
+//  while (SDL_PollEvent(&event))
+//  {
+//    switch (event.type)
+//    {
+//      case SDL_QUIT:
+//        exit(0);
+//        break;
+//
+//      default:
+//        break;
+//    }
+//  }
+//}
 
 TextureStorage LoadTextures(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
@@ -80,12 +80,11 @@ void start_game() {
       dy *= -1;
     }
     area_GameObject_move(player, area, dx, dy, 0);
-    doInput();
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
     emscripten_sleep(1000);
 #else
-    SDL_Delay(1000);
+    sleep(1);
 #endif
   }
 }
