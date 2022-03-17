@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include "engine.h"
+#include <SDL2/SDL.h>
 
 enum GameObjectType_t {
   None,
@@ -11,8 +12,6 @@ enum GameObjectType_t {
   Player,
   Nishal,
 };
-
-#include "../engine/renders/2D/sdl/Texture.h"
 
 void doInput(void)
 {
@@ -34,10 +33,10 @@ void doInput(void)
 
 TextureStorage LoadTextures_png(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
-  textureStorage_insert(storage, Player, Texture_load("assets/player.png", render));
-  textureStorage_insert(storage, Nishal, Texture_load("assets/nishal.png", render));
-  textureStorage_insert(storage, Tile, Texture_load("assets/tile.png", render));
-  textureStorage_insert(storage, None, Texture_load("assets/none.png", render));
+  textureStorage_insert(storage, Player, Texture_load(render, "assets/player.png"));
+  textureStorage_insert(storage, Nishal, Texture_load(render, "assets/nishal.png"));
+  textureStorage_insert(storage, Tile, Texture_load(render, "assets/tile.png"));
+  textureStorage_insert(storage, None, Texture_load(render, "assets/none.png"));
   return storage;
 }
 

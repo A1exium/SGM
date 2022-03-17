@@ -4,23 +4,19 @@ project(SGM C)
 set(CMAKE_C_STANDARD 11)
 
 
-if(EMSCRIPTEN)
-    message("Compiling to web!")
-    set(CMAKE_EXECUTABLE_SUFFIX .html)
-    add_link_options(-sWASM -sALLOW_MEMORY_GROWTH)
-    add_link_options(--preload-file ../assets/)
-ENDIF()
-
 add_executable(SGM src/main.c src/game/start.c src/globals/const.h)
 add_subdirectory(src/engine)
 target_link_libraries(SGM NHE)
-#add_dependencies(SGM NHE)
 
 target_include_directories(SGM PUBLIC src/engine/tools)
 target_include_directories(SGM PUBLIC src/engine)
 target_include_directories(SGM PUBLIC src/globals)
 
-IF(EMSCRIPTEN)
+if(EMSCRIPTEN)
+    message("Compiling to web!")
+    set(CMAKE_EXECUTABLE_SUFFIX .html)
+    target_link_options(SGM PRIVATE -sWASM -sALLOW_MEMORY_GROWTH)
+    target_link_options(SGM PRIVATE --preload-file ../assets/)
     set_target_properties(SGM PROPERTIES OUTPUT_NAME "index")
 ENDIF()
 
