@@ -62,12 +62,11 @@ void start_game() {
   initGame(players, nishals, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 50, AREA_MAX_Y * 50);
-  render_set_textureStorage(render, LoadTextures(render));
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 4, AREA_MAX_Y * 3 * 2);
+  TextureStorage textures = LoadTextures(render);
+  render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
 
-//  SDL_AddTimer(100, Render_timer, render);
-//  void *params[] = {player, &area, &dx, &dy};
   int dx = 1, dy = 1;
   while (1) {
     render_render(render);
@@ -87,4 +86,10 @@ void start_game() {
     sleep(1);
 #endif
   }
+  list_free(players, gameObject_free);
+  list_free(nishals, gameObject_free);
+  screen_free(game_screen);
+  view_free(global_view);
+  Render_free(render);
+  textureStorage_free(textures);
 }
