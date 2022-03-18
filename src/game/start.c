@@ -40,22 +40,34 @@ void sleep_ms(int milliseconds){ // cross-platform sleep function
 #endif
 }
 
-//void doInput()
-//{
-//  SDL_Event event;
-//  while (SDL_PollEvent(&event))
-//  {
-//    switch (event.type)
-//    {
-//      case SDL_QUIT:
-//        exit(0);
-//        break;
-//
-//      default:
-//        break;
-//    }
-//  }
-//}
+#include <SDL2/SDL.h>
+void doInput(int *dx, int *dy)
+{
+  SDL_Event event;
+  while (SDL_PollEvent(&event))
+  {
+    switch (event.type)
+    {
+      case SDL_QUIT:
+        exit(0);
+        break;
+      case SDL_KEYDOWN:
+        fflush(stdout);
+        if (event.key.keysym.sym == SDLK_LEFT) {
+          *dx = -1;
+        } else if (event.key.keysym.sym == SDLK_RIGHT) {
+          *dx = 1;
+        } else if (event.key.keysym.sym == SDLK_UP) {
+          *dy = -1;
+        } else if (event.key.keysym.sym == SDLK_DOWN) {
+          *dy = 1;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+}
 
 TextureStorage LoadTextures(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
@@ -88,7 +100,7 @@ _Noreturn void start_game() {
   initGame(players, nishals, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 * 5, AREA_MAX_Y * 3 * 3 * 10);
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 * 5, AREA_MAX_Y * 3 * 3 * 8);
   TextureStorage textures = LoadTextures(render);
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
@@ -98,13 +110,18 @@ _Noreturn void start_game() {
     render_render(render);
     Position player_pos = gameObject_get_pos(player);
     int cx = player_pos.x, cy = player_pos.y;
-    if (cx == AREA_MAX_X - 1 || cx == 0) {
-      dx *= -1;
+    if (cx >= AREA_MAX_X - 1) {
+      dx = -1;
+    } else if (cx <= 0) {
+      dx = 1;
     }
-    if (cy == AREA_MAX_Y - 1 || cy == 0) {
-      dy *= -1;
+    if (cy >= AREA_MAX_Y - 1) {
+      dy = -1;
+    } else if (cy <= 0) {
+      dy = 1;
     }
     area_GameObject_move(player, area, dx, dy, 0);
+    doInput(&dx, &dy);
     sleep_ms(100);
   }
   list_free(players, gameObject_free);
