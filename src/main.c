@@ -9,7 +9,7 @@
 // ADMIN LOH
 // Second dev tozhe loh.
 
-extern void start_game();
+_Noreturn extern void start_game();
 
 int main() {
 //#ifdef __EMSCRIPTEN__

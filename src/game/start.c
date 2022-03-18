@@ -3,7 +3,6 @@
 //
 
 #include "engine.h"
-#include <unistd.h>
 //#include <SDL2/SDL.h>
 
 enum GameObjectType_t {
@@ -12,6 +11,34 @@ enum GameObjectType_t {
   Player,
   Nishal,
 };
+
+
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#elif WIN32
+#include <windows.h>
+#elif _POSIX_C_SOURCE >= 199309L
+#include <time.h>   // for nanosleep
+#else
+#include <unistd.h> // for usleep
+#endif
+
+void sleep_ms(int milliseconds){ // cross-platform sleep function
+#ifdef __EMSCRIPTEN__
+  emscripten_sleep(milliseconds);
+#elif WIN32
+  Sleep(milliseconds);
+#elif _POSIX_C_SOURCE >= 199309L
+  struct timespec ts;
+  ts.tv_sec = milliseconds / 1000;
+  ts.tv_nsec = (milliseconds % 1000) * 1000000;
+  nanosleep(&ts, NULL);
+#else
+  if (milliseconds >= 1000)
+      sleep(milliseconds / 1000);
+    usleep((milliseconds % 1000) * 1000);
+#endif
+}
 
 //void doInput()
 //{
@@ -51,8 +78,7 @@ void initGame(ListGameObject players, ListGameObject nishals, Area area) {
   createObject(Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 2, area, players);
 }
 
-
-void start_game() {
+_Noreturn void start_game() {
 //  SetConsoleMode()
   initCurrentRender();
   Area area;
@@ -62,7 +88,7 @@ void start_game() {
   initGame(players, nishals, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 4, AREA_MAX_Y * 3 * 2);
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 * 5, AREA_MAX_Y * 3 * 3 * 10);
   TextureStorage textures = LoadTextures(render);
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
@@ -79,12 +105,7 @@ void start_game() {
       dy *= -1;
     }
     area_GameObject_move(player, area, dx, dy, 0);
-#ifdef __EMSCRIPTEN__
-#include <emscripten.h>
-    emscripten_sleep(1000);
-#else
-    sleep(1);
-#endif
+    sleep_ms(100);
   }
   list_free(players, gameObject_free);
   list_free(nishals, gameObject_free);
