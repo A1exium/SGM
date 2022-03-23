@@ -95,9 +95,42 @@ void initGame(ListGameObject players, ListGameObject nishals_left, ListGameObjec
 #include <stdio.h>
 #include <SDL2/SDL.h>
 
+void movePlayer(EventCallbackArgs _args) {
+  int *dx, *dy;
+  GameObject *player;
+  Area *area;
+  EventCallbackArgs_unpack(_args, &area, &player, &dx, &dy);
+  Position player_pos = gameObject_get_pos(player);
+  int cx = player_pos.x, cy = player_pos.y;
+  if (cx >= AREA_MAX_X - 1) {
+    *dx = -1;
+  } else if (cx <= 0) {
+    *dx = 1;
+  }
+  if (cy >= AREA_MAX_Y - 1) {
+    *dy = -1;
+  } else if (cy <= 0) {
+    *dy = 1;
+  }
+  if (area_get(*area, cx + *dx, cy + *dy, 1) != 0 || area_get(*area, cx + *dx, cy, 1)) {
+    if (cx > AREA_MAX_X / 2)
+      *dx = -1;
+    else
+      *dx = 1;
+  }
+  area_GameObject_move(player, *area, *dx, *dy, 0);
+}
+
 void print_e(void *_) {
   SDL_Log("12312");
   printf("213213");
+}
+
+void print_a(EventCallbackArgs _args) {
+  int *num = 0;
+  EventCallbackArgs_unpack(_args, &num);
+  SDL_Log("%d", *num);
+  printf("%d", *num);
 }
 
 const EventCallbackArgs NO_ARGS = {
@@ -131,35 +164,28 @@ _Noreturn void start_game() {
 //  addEventListener(loop, print_e, NO_ARGS);
 //  GLOBAL_RENDER = render;
 
+  int *dx = malloc(sizeof(int)), *dy = malloc(sizeof(int));
+  *dx = 1;
+  *dy = 1;
+  Event loop;
+  loop.type = LoopEvent;
+  addEventListener(loop, movePlayer, EventCallbackArgs_pack(4, &area, player, dx, dy));
+  GLOBAL_RENDER = render;
+
+  int *var = malloc(sizeof(int));
+  *var = 5;
+
   Event key;
   key.type = Keyboard;
   key.key = 'l';
-  addEventListener(key, print_e, NO_ARGS);
+  addEventListener(key, print_a, EventCallbackArgs_pack(1, var));
   GLOBAL_RENDER = render;
 
 //  int dx = 1, dy = 1;
 //  while (1) {
 //    print_e(0);
 //    render_render(render);
-//    Position player_pos = gameObject_get_pos(player);
-//    int cx = player_pos.x, cy = player_pos.y;
-//    if (cx >= AREA_MAX_X - 1) {
-//      dx = -1;
-//    } else if (cx <= 0) {
-//      dx = 1;
-//    }
-//    if (cy >= AREA_MAX_Y - 1) {
-//      dy = -1;
-//    } else if (cy <= 0) {
-//      dy = 1;
-//    }
-//    if (area_get(area, cx + dx, cy + dy, 1) != 0 || area_get(area, cx + dx, cy, 1)) {
-//      if (cx > AREA_MAX_X / 2)
-//        dx = -1;
-//      else
-//        dx = 1;
-//    }
-//    area_GameObject_move(player, area, dx, dy, 0);
+//
 ////    doInput(&dx, &dy, nishal_left, nishal_right, area);
 //    sleep_ms(100);
 //  }
