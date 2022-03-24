@@ -3,7 +3,6 @@
 //
 
 #include "engine.h"
-//#include <SDL2/SDL.h>
 
 enum GameObjectType_t {
   None,
@@ -12,58 +11,26 @@ enum GameObjectType_t {
   Nishal,
 };
 
-//#include <SDL2/SDL.h>
-//void doInput(int *dx, int *dy, ListGameObject left, ListGameObject right, Area area)
-//{
-//  SDL_Event event;
-//  int lx = 0, rx = 0;
-//  while (SDL_PollEvent(&event))
-//  {
-//    switch (event.type)
-//    {
-//      case SDL_QUIT:
-//        exit(0);
-//        break;
-//      case SDL_KEYDOWN:
-//        fflush(stdout);
-//        if (event.key.keysym.sym == SDLK_LEFT) {
-//          *dx = -1;
-//        } else if (event.key.keysym.sym == SDLK_RIGHT) {
-//          *dx = 1;
-//        } else if (event.key.keysym.sym == SDLK_UP) {
-//          *dy = -1;
-//        } else if (event.key.keysym.sym == SDLK_DOWN) {
-//          *dy = 1;
-//        } else if (event.key.keysym.sym == SDLK_a) {
-//          lx = -1;
-//        } else if (event.key.keysym.sym == SDLK_z) {
-//          lx = 1;
-//        } else if (event.key.keysym.sym == SDLK_k) {
-//          rx = -1;
-//        } else if (event.key.keysym.sym == SDLK_m) {
-//          rx = 1;
-//        }
-//        break;
-//      default:
-//        break;
-//    }
-//  }
-//  if (rx) {
-//    foreach(e, right) {
-//      GameObject *ns = listItem_get(e);
-//      area_GameObject_move(ns, area, 0, rx, 0);
-//    }
-//  }
-//  if (lx) {
-//    foreach(e, left) {
-//      GameObject *ns = listItem_get(e);
-//      area_GameObject_move(ns, area, 0, lx, 0);
-//    }
-//  }
-//}
+void move_board(EventCallbackArgs args) {
+  ListGameObject left = 0;
+  ListGameObject right = 0;
+  int *rx = 0, *lx = 0;
+  Area *area;
+  EventCallbackArgs_unpack(args, &area, &left, &right, &rx, &lx);
 
-//#define IMG_EXT "png"
-//extern const EventCallbackArgs NO_ARGS;
+  if (rx) {
+    foreach(e, right) {
+      GameObject *ns = listItem_get(e);
+      area_GameObject_move(ns, *area, 0, *rx, 0);
+    }
+  }
+  if (lx) {
+    foreach(e, left) {
+      GameObject *ns = listItem_get(e);
+      area_GameObject_move(ns, *area, 0, *lx, 0);
+    }
+  }
+}
 
 TextureStorage LoadTextures(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
@@ -92,45 +59,32 @@ void initGame(ListGameObject players, ListGameObject nishals_left, ListGameObjec
   createObject(Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 2, area, players);
 }
 
-#include <stdio.h>
-#include <SDL2/SDL.h>
-
 void movePlayer(EventCallbackArgs _args) {
-  int *dx, *dy;
+//  int *dx, *dy;
+  static int dx = 1, dy = 1;
   GameObject *player;
   Area *area;
-  EventCallbackArgs_unpack(_args, &area, &player, &dx, &dy);
+  EventCallbackArgs_unpack(_args, &area, &player);
+
   Position player_pos = gameObject_get_pos(player);
   int cx = player_pos.x, cy = player_pos.y;
   if (cx >= AREA_MAX_X - 1) {
-    *dx = -1;
+    dx = -1;
   } else if (cx <= 0) {
-    *dx = 1;
+    dx = 1;
   }
   if (cy >= AREA_MAX_Y - 1) {
-    *dy = -1;
+    dy = -1;
   } else if (cy <= 0) {
-    *dy = 1;
+    dy = 1;
   }
-  if (area_get(*area, cx + *dx, cy + *dy, 1) != 0 || area_get(*area, cx + *dx, cy, 1)) {
+  if (area_get(*area, cx + dx, cy + dy, 1) != 0 || area_get(*area, cx + dx, cy, 1)) {
     if (cx > AREA_MAX_X / 2)
-      *dx = -1;
+      dx = -1;
     else
-      *dx = 1;
+      dx = 1;
   }
-  area_GameObject_move(player, *area, *dx, *dy, 0);
-}
-
-void print_e(void *_) {
-  SDL_Log("12312");
-  printf("213213");
-}
-
-void print_a(EventCallbackArgs _args) {
-  int *num = 0;
-  EventCallbackArgs_unpack(_args, &num);
-  SDL_Log("%d", *num);
-  printf("%d", *num);
+  area_GameObject_move(player, *area, dx, dy, 0);
 }
 
 const EventCallbackArgs NO_ARGS = {
@@ -143,8 +97,7 @@ Render *GLOBAL_RENDER;
 _Noreturn void start_game() {
   EventPool_create();
   ListeningTable_init();
-//  printf("213213");
-//  SetConsoleMode()
+
   initCurrentRender();
   Area area;
   Area_init(area);
@@ -159,36 +112,42 @@ _Noreturn void start_game() {
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
 
+
+
 //  Event loop;
 //  loop.type = LoopEvent;
 //  addEventListener(loop, print_e, NO_ARGS);
 //  GLOBAL_RENDER = render;
 
-  int *dx = malloc(sizeof(int)), *dy = malloc(sizeof(int));
-  *dx = 1;
-  *dy = 1;
   Event loop;
   loop.type = LoopEvent;
-  addEventListener(loop, movePlayer, EventCallbackArgs_pack(4, &area, player, dx, dy));
+  addEventListener(loop, movePlayer, EventCallbackArgs_pack(2, &area, player));
   GLOBAL_RENDER = render;
 
-  int *var = malloc(sizeof(int));
-  *var = 5;
-
+  int *rx = malloc(sizeof(int));
+  *rx = -1;
   Event key;
   key.type = Keyboard;
-  key.key = 'l';
-  addEventListener(key, print_a, EventCallbackArgs_pack(1, var));
+  key.key = 'k';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, rx, 0));
+
+
+  rx = malloc(sizeof(int));
+  *rx = 1;
+  key.key = 'm';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, rx, 0));
+
+  int *lx = malloc(sizeof(int));
+  *lx = -1;
+  key.key = 'a';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, 0, lx));
+
+  lx = malloc(sizeof(int));
+  *lx = 1;
+  key.key = 'z';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, 0, lx));
   GLOBAL_RENDER = render;
 
-//  int dx = 1, dy = 1;
-//  while (1) {
-//    print_e(0);
-//    render_render(render);
-//
-////    doInput(&dx, &dy, nishal_left, nishal_right, area);
-//    sleep_ms(100);
-//  }
 
 //  list_free(players, gameObject_free);
 //  list_free(nishal_right, gameObject_free);
