@@ -94,11 +94,14 @@ const EventCallbackArgs NO_ARGS = {
 
 Render *GLOBAL_RENDER;
 
+#include <stdio.h>
+
 _Noreturn void start_game() {
   EventPool_create();
   ListeningTable_init();
 
   initCurrentRender();
+
   Area area;
   Area_init(area);
   ListGameObject players = ListGameObject_new();
