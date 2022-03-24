@@ -19,15 +19,21 @@ void move_board(EventCallbackArgs args) {
   EventCallbackArgs_unpack(args, &area, &left, &right, &rx, &lx);
 
   if (rx) {
+    int i = 0;
     foreach(e, right) {
       GameObject *ns = listItem_get(e);
+      if(i == 0 && (gameObject_get_pos(ns).y + *rx == AREA_MAX_Y || gameObject_get_pos(ns).y + *rx == 1)) break;
       area_GameObject_move(ns, *area, 0, *rx, 0);
+      i++;
     }
   }
-  if (lx) {
+  else if (lx) {
+    int i = 0;
     foreach(e, left) {
       GameObject *ns = listItem_get(e);
+      if(i == 0 && (gameObject_get_pos(ns).y + *lx + 2 == AREA_MAX_Y || gameObject_get_pos(ns).y + *lx == -1)) break;
       area_GameObject_move(ns, *area, 0, *lx, 0);
+      i++;
     }
   }
 }
@@ -94,8 +100,6 @@ const EventCallbackArgs NO_ARGS = {
 
 Render *GLOBAL_RENDER;
 
-#include <stdio.h>
-
 _Noreturn void start_game() {
   EventPool_create();
   ListeningTable_init();
@@ -110,7 +114,7 @@ _Noreturn void start_game() {
   initGame(players, nishal_left, nishal_right, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 /* 5*/, AREA_MAX_Y * 3 * 3 /* 8*/);
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 * 5, AREA_MAX_Y * 3 * 3 * 8);
   TextureStorage textures = LoadTextures(render);
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
