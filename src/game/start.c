@@ -3,7 +3,6 @@
 //
 
 #include "engine.h"
-//#include <SDL2/SDL.h>
 
 enum GameObjectType_t {
   None,
@@ -12,90 +11,39 @@ enum GameObjectType_t {
   Nishal,
 };
 
+void move_board(EventCallbackArgs args) {
+  ListGameObject left = 0;
+  ListGameObject right = 0;
+  int *rx = 0, *lx = 0;
+  Area *area;
+  EventCallbackArgs_unpack(args, &area, &left, &right, &rx, &lx);
 
-#ifdef __EMSCRIPTEN__
-#include <emscripten.h>
-#elif WIN32
-#include <windows.h>
-#elif _POSIX_C_SOURCE >= 199309L
-#include <time.h>   // for nanosleep
-#else
-#include <unistd.h> // for usleep
-#endif
-
-void sleep_ms(int milliseconds){ // cross-platform sleep function
-#ifdef __EMSCRIPTEN__
-  emscripten_sleep(milliseconds);
-#elif WIN32
-  Sleep(milliseconds);
-#elif _POSIX_C_SOURCE >= 199309L
-  struct timespec ts;
-  ts.tv_sec = milliseconds / 1000;
-  ts.tv_nsec = (milliseconds % 1000) * 1000000;
-  nanosleep(&ts, NULL);
-#else
-  if (milliseconds >= 1000)
-      sleep(milliseconds / 1000);
-    usleep((milliseconds % 1000) * 1000);
-#endif
-}
-
-#include <SDL2/SDL.h>
-void doInput(int *dx, int *dy, ListGameObject left, ListGameObject right, Area area)
-{
-  SDL_Event event;
-  int lx = 0, rx = 0;
-  while (SDL_PollEvent(&event))
-  {
-    switch (event.type)
-    {
-      case SDL_QUIT:
-        exit(0);
-        break;
-      case SDL_KEYDOWN:
-        fflush(stdout);
-        if (event.key.keysym.sym == SDLK_LEFT) {
-          *dx = -1;
-        } else if (event.key.keysym.sym == SDLK_RIGHT) {
-          *dx = 1;
-        } else if (event.key.keysym.sym == SDLK_UP) {
-          *dy = -1;
-        } else if (event.key.keysym.sym == SDLK_DOWN) {
-          *dy = 1;
-        } else if (event.key.keysym.sym == SDLK_a) {
-          lx = -1;
-        } else if (event.key.keysym.sym == SDLK_z) {
-          lx = 1;
-        } else if (event.key.keysym.sym == SDLK_k) {
-          rx = -1;
-        } else if (event.key.keysym.sym == SDLK_m) {
-          rx = 1;
-        }
-        break;
-      default:
-        break;
-    }
-  }
   if (rx) {
+    int i = 0;
     foreach(e, right) {
       GameObject *ns = listItem_get(e);
-      area_GameObject_move(ns, area, 0, rx, 0);
+      if(i == 0 && (gameObject_get_pos(ns).y + *rx == AREA_MAX_Y || gameObject_get_pos(ns).y + *rx == 1)) break;
+      area_GameObject_move(ns, *area, 0, *rx, 0);
+      i++;
     }
   }
-  if (lx) {
+  else if (lx) {
+    int i = 0;
     foreach(e, left) {
       GameObject *ns = listItem_get(e);
-      area_GameObject_move(ns, area, 0, lx, 0);
+      if(i == 0 && (gameObject_get_pos(ns).y + *lx + 2 == AREA_MAX_Y || gameObject_get_pos(ns).y + *lx == -1)) break;
+      area_GameObject_move(ns, *area, 0, *lx, 0);
+      i++;
     }
   }
 }
 
 TextureStorage LoadTextures(Render *render) {
   TextureStorage storage = TextureStorage_new(4);
-  textureStorage_insert(storage, Player, Texture_load(render, "assets/player"));
-  textureStorage_insert(storage, Nishal, Texture_load(render, "assets/nishal"));
-  textureStorage_insert(storage, Tile, Texture_load(render, "assets/tile"));
-  textureStorage_insert(storage, None, Texture_load(render, "assets/none"));
+  textureStorage_insert(storage, Player, Texture_load(render, get_asset_path("player")));
+  textureStorage_insert(storage, Nishal, Texture_load(render, get_asset_path("nishal")));
+  textureStorage_insert(storage, Tile, Texture_load(render, get_asset_path("tile")));
+  textureStorage_insert(storage, None, Texture_load(render, get_asset_path("none")));
   return storage;
 }
 
@@ -117,9 +65,47 @@ void initGame(ListGameObject players, ListGameObject nishals_left, ListGameObjec
   createObject(Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 2, area, players);
 }
 
+void movePlayer(EventCallbackArgs _args) {
+//  int *dx, *dy;
+  static int dx = 1, dy = 1;
+  GameObject *player;
+  Area *area;
+  EventCallbackArgs_unpack(_args, &area, &player);
+
+  Position player_pos = gameObject_get_pos(player);
+  int cx = player_pos.x, cy = player_pos.y;
+  if (cx >= AREA_MAX_X - 1) {
+    dx = -1;
+  } else if (cx <= 0) {
+    dx = 1;
+  }
+  if (cy >= AREA_MAX_Y - 1) {
+    dy = -1;
+  } else if (cy <= 0) {
+    dy = 1;
+  }
+  if (area_get(*area, cx + dx, cy + dy, 1) != 0 || area_get(*area, cx + dx, cy, 1)) {
+    if (cx > AREA_MAX_X / 2)
+      dx = -1;
+    else
+      dx = 1;
+  }
+  area_GameObject_move(player, *area, dx, dy, 0);
+}
+
+const EventCallbackArgs NO_ARGS = {
+    .length = 0,
+    .storage = 0,
+};
+
+Render *GLOBAL_RENDER;
+
 _Noreturn void start_game() {
-//  SetConsoleMode()
+  EventPool_create();
+  ListeningTable_init();
+
   initCurrentRender();
+
   Area area;
   Area_init(area);
   ListGameObject players = ListGameObject_new();
@@ -133,36 +119,42 @@ _Noreturn void start_game() {
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
 
-  int dx = 1, dy = 1;
-  while (1) {
-    render_render(render);
-    Position player_pos = gameObject_get_pos(player);
-    int cx = player_pos.x, cy = player_pos.y;
-    if (cx >= AREA_MAX_X - 1) {
-      dx = -1;
-    } else if (cx <= 0) {
-      dx = 1;
-    }
-    if (cy >= AREA_MAX_Y - 1) {
-      dy = -1;
-    } else if (cy <= 0) {
-      dy = 1;
-    }
-    if (area_get(area, cx + dx, cy + dy, 1) != 0 || area_get(area, cx + dx, cy, 1)) {
-      if (cx > AREA_MAX_X / 2)
-        dx = -1;
-      else
-        dx = 1;
-    }
-    area_GameObject_move(player, area, dx, dy, 0);
-    doInput(&dx, &dy, nishal_left, nishal_right, area);
-    sleep_ms(100);
-  }
-  list_free(players, gameObject_free);
-  list_free(nishal_right, gameObject_free);
-  list_free(nishal_left, gameObject_free);
-  screen_free(game_screen);
-  view_free(global_view);
-  Render_free(render);
-  textureStorage_free(textures);
+  Event loop;
+  loop.type = LoopEvent;
+  addEventListener(loop, movePlayer, EventCallbackArgs_pack(2, &area, player));
+  GLOBAL_RENDER = render;
+
+  int *rx = malloc(sizeof(int));
+  *rx = -1;
+  Event key;
+  key.type = Keyboard;
+  key.key = 'k';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, rx, 0));
+
+
+  rx = malloc(sizeof(int));
+  *rx = 1;
+  key.key = 'm';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, rx, 0));
+
+  int *lx = malloc(sizeof(int));
+  *lx = -1;
+  key.key = 'a';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, 0, lx));
+
+  lx = malloc(sizeof(int));
+  *lx = 1;
+  key.key = 'z';
+  addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, 0, lx));
+  GLOBAL_RENDER = render;
+
+
+//  list_free(players, gameObject_free);
+//  list_free(nishal_right, gameObject_free);
+//  list_free(nishal_left, gameObject_free);
+//  screen_free(game_screen);
+//  view_free(global_view);
+//  Render_free(render);
+//  textureStorage_free(textures);
+  startEventLoop();
 }
