@@ -20,18 +20,18 @@ void move_board(EventCallbackArgs args) {
 
   if (rx) {
     int i = 0;
-    foreach(e, right) {
-      GameObject *ns = listItem_get(e);
-      if(i == 0 && (gameObject_get_pos(ns).y + *rx == AREA_MAX_Y || gameObject_get_pos(ns).y + *rx == 1)) break;
+    foreach(GameObject *ns = 0, ns, right) {
+      if(i == 0 && (gameObject_get_pos(ns).y + *rx == AREA_MAX_Y || gameObject_get_pos(ns).y + *rx == 1))
+        break;
       area_GameObject_move(ns, *area, 0, *rx, 0);
       i++;
     }
   }
   else if (lx) {
     int i = 0;
-    foreach(e, left) {
-      GameObject *ns = listItem_get(e);
-      if(i == 0 && (gameObject_get_pos(ns).y + *lx + 2 == AREA_MAX_Y || gameObject_get_pos(ns).y + *lx == -1)) break;
+    foreach(GameObject *ns = 0, ns, left) {
+      if(i == 0 && (gameObject_get_pos(ns).y + *lx + 2 == AREA_MAX_Y || gameObject_get_pos(ns).y + *lx == -1))
+        break;
       area_GameObject_move(ns, *area, 0, *lx, 0);
       i++;
     }
@@ -100,7 +100,10 @@ const EventCallbackArgs NO_ARGS = {
 
 Render *GLOBAL_RENDER;
 
+#include "engine_init.h"
+
 _Noreturn void start_game() {
+
   EventPool_create();
   ListeningTable_init();
 
@@ -131,7 +134,6 @@ _Noreturn void start_game() {
   key.key = 'k';
   addEventListener(key, move_board, EventCallbackArgs_pack(5, &area, nishal_left, nishal_right, rx, 0));
 
-
   rx = malloc(sizeof(int));
   *rx = 1;
   key.key = 'm';
@@ -156,5 +158,5 @@ _Noreturn void start_game() {
 //  view_free(global_view);
 //  Render_free(render);
 //  textureStorage_free(textures);
-  startEventLoop();
+  start_event_loop();
 }
