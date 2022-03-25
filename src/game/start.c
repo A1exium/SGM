@@ -117,7 +117,7 @@ _Noreturn void start_game() {
   initGame(players, nishal_left, nishal_right, area);
   View *global_view = View_new(&area, 0, 0, AREA_MAX_X, AREA_MAX_Y);
   Screen game_screen = Screen_new(global_view);
-  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 * 5, AREA_MAX_Y * 3 * 3 * 8);
+  Render *render = Render_new(game_screen, 0, AREA_MAX_X * 3 * 6 /* 5*/, AREA_MAX_Y * 3 * 3 /* 8*/);
   TextureStorage textures = LoadTextures(render);
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
