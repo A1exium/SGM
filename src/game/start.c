@@ -100,7 +100,7 @@ const EventCallbackArgs NO_ARGS = {
 
 Render GLOBAL_RENDER;
 
-#include "engine_init.h"
+//#include "engine_init.h"
 #include <stdlib.h>
 
 _Noreturn void start_game() {
