@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(SGM src/main.c src/game/start.c src/globals/const.h)
 add_subdirectory(src/engine)
-target_link_libraries(SGM NHE)
+target_link_libraries(SGM NHE-base)
 
 target_include_directories(SGM PUBLIC src/engine/tools)
 target_include_directories(SGM PUBLIC src/engine)
@@ -30,3 +30,10 @@ set_target_properties(SGM
 set_target_properties(SGM
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+include(./cfg/CMakeLists.txt)
+if (RENDER STREQUAL "sdl")
+    target_link_libraries(SGM SDL-graphics)
+else()
+    target_link_libraries(SGM Term-graphics)
+endif()
