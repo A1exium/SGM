@@ -100,13 +100,10 @@ const EventCallbackArgs NO_ARGS = {
 
 Render GLOBAL_RENDER;
 
-#include "engine_init.h"
 #include <stdlib.h>
 
-_Noreturn void start_game() {
+void start_game() {
 
-  EventPool_create();
-  ListeningTable_init();
 
   initCurrentRender();
 
@@ -148,8 +145,6 @@ _Noreturn void start_game() {
   *lx = 1;
   key.key = 'z';
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, 0, lx));
-  GLOBAL_RENDER = render;
-
 
 //  list_free(players, gameObject_free);
 //  list_free(nishal_right, gameObject_free);
@@ -158,5 +153,4 @@ _Noreturn void start_game() {
 //  view_free(global_view);
 //  Render_free(render);
 //  textureStorage_free(textures);
-  start_event_loop();
 }

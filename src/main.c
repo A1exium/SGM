@@ -6,17 +6,13 @@
 // ADMIN LOH
 // Second dev tozhe loh.
 
-_Noreturn extern void start_game();
+extern void start_game();
 
+#include "engine_init.h"
 
 int main() {
-//#ifdef __EMSCRIPTEN__
-//#include <emscripten.h>
-//  emscripten_set_main_loop(start_game, 60, 1);
-//#else
-//  EventPool_create();
-//  ListeningTable_init();
+  EventPool_create();
+  ListeningTable_init();
   start_game();
-//  startEventLoop();
-//#endif
+  start_event_loop();
 }
