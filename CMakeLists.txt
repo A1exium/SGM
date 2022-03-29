@@ -3,6 +3,7 @@ project(SGM C)
 
 set(CMAKE_C_STANDARD 11)
 
+include(cfg/build-cfg.txt)
 
 add_executable(SGM src/main.c src/game/start.c src/globals/const.h)
 add_subdirectory(src/engine)
@@ -31,11 +32,3 @@ set_target_properties(SGM
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-# include(./cfg/CMakeLists.txt)
-# if (RENDER STREQUAL "sdl")
-#         add_subdirectory(src/engine/renders/2D/sdl)
-#     target_link_libraries(SGM SDL-graphics)
-# else()
-#         add_subdirectory(src/engine/renders/2D/terminal)
-#     target_link_libraries(SGM Term-graphics)
-# endif()
