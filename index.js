@@ -187,7 +187,7 @@ var Module = typeof Module !== 'undefined' ? Module : {};
     }
   
    }
-   loadPackage({"files": [{"filename": "/assets/nishal.nsd", "start": 0, "end": 60, "audio": 0}, {"filename": "/assets/nishal.png", "start": 60, "end": 538, "audio": 0}, {"filename": "/assets/none.nsd", "start": 538, "end": 598, "audio": 0}, {"filename": "/assets/none.png", "start": 598, "end": 1076, "audio": 0}, {"filename": "/assets/player.nsd", "start": 1076, "end": 1136, "audio": 0}, {"filename": "/assets/player.png", "start": 1136, "end": 1621, "audio": 0}, {"filename": "/assets/tile.nsd", "start": 1621, "end": 1681, "audio": 0}, {"filename": "/assets/tile.png", "start": 1681, "end": 2188, "audio": 0}], "remote_package_size": 2188, "package_uuid": "d64fa33e-7da9-423f-93b4-135a8d8cb2ea"});
+   loadPackage({"files": [{"filename": "/assets/nishal.nsd", "start": 0, "end": 60, "audio": 0}, {"filename": "/assets/nishal.png", "start": 60, "end": 538, "audio": 0}, {"filename": "/assets/none.nsd", "start": 538, "end": 598, "audio": 0}, {"filename": "/assets/none.png", "start": 598, "end": 1076, "audio": 0}, {"filename": "/assets/player.nsd", "start": 1076, "end": 1136, "audio": 0}, {"filename": "/assets/player.png", "start": 1136, "end": 1621, "audio": 0}, {"filename": "/assets/tile.nsd", "start": 1621, "end": 1681, "audio": 0}, {"filename": "/assets/tile.png", "start": 1681, "end": 2188, "audio": 0}], "remote_package_size": 2188, "package_uuid": "58ac84b9-4437-4979-8e8c-58d21ece36b0"});
   
   })();
   
