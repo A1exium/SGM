@@ -20,7 +20,7 @@ void move_board(EventCallbackArgs args) {
   Event t_ev;
   t_ev.type = Keyboard;
   if (rx) {
-    if (*rx == 1)
+    if (*rx == -1)
       t_ev.key = 'k';
     else
       t_ev.key = 'm';
@@ -33,7 +33,7 @@ void move_board(EventCallbackArgs args) {
     }
   }
   else if (lx) {
-    if (*lx == 1)
+    if (*lx == -1)
       t_ev.key = 'a';
     else
       t_ev.key = 'z';
@@ -46,9 +46,9 @@ void move_board(EventCallbackArgs args) {
     }
   }
 
-  if (send_event) {
-    send_event(t_ev);
-  }
+//  if (send_event) {
+//    send_event(t_ev);
+//  }
 }
 
 TextureStorage LoadTextures(Render render) {
