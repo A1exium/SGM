@@ -17,8 +17,13 @@ void move_board(EventCallbackArgs args) {
   List right = 0;
   int *rx = 0, *lx = 0;
   EventCallbackArgs_unpack(args, &left, &right, &rx, &lx);
-
+  Event t_ev;
+  t_ev.type = Keyboard;
   if (rx) {
+    if (*rx == 1)
+      t_ev.key = 'k';
+    else
+      t_ev.key = 'm';
     int i = 0;
     foreach(GameObject ns = 0, ns, right) {
       if(i == 0 && (gameObject_get_pos(ns).y + *rx == AREA_MAX_Y || gameObject_get_pos(ns).y + *rx == 1))
@@ -28,6 +33,10 @@ void move_board(EventCallbackArgs args) {
     }
   }
   else if (lx) {
+    if (*lx == 1)
+      t_ev.key = 'a';
+    else
+      t_ev.key = 'z';
     int i = 0;
     foreach(GameObject ns = 0, ns, left) {
       if(i == 0 && (gameObject_get_pos(ns).y + *lx + 2 == AREA_MAX_Y || gameObject_get_pos(ns).y + *lx == -1))
@@ -35,6 +44,10 @@ void move_board(EventCallbackArgs args) {
       gameObject_move(ns, 0, *lx, 0);
       i++;
     }
+  }
+
+  if (send_event) {
+    send_event(t_ev);
   }
 }
 
@@ -102,6 +115,14 @@ Render GLOBAL_RENDER;
 
 #include <stdlib.h>
 
+void send_t(EventCallbackArgs args) {
+  Event t_ev;
+  t_ev.key = 'z';
+  t_ev.type = Keyboard;
+  send_event(t_ev);
+}
+
+
 void start_game() {
 
 
@@ -145,6 +166,9 @@ void start_game() {
   *lx = 1;
   key.key = 'z';
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, 0, lx));
+
+  key.key = 't';
+  addEventListener(key, send_t, NO_ARGS);
 
 //  list_free(players, gameObject_free);
 //  list_free(nishal_right, gameObject_free);

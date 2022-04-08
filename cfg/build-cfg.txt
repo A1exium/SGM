@@ -1,1 +1,1 @@
-set(RENDER "term")
+set(RENDER "sdl")
