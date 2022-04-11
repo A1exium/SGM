@@ -12,7 +12,17 @@ enum GameObjectType_t {
   Nishal,
 };
 
+typedef enum {
+  BoardMoveUp = 1,
+  BoardMoveDown = 2
+} BoardMoveType;
+
+#include <stdio.h>
+
 void move_board(Event e, EventCallbackArgs args) {
+  if (e.type == EventServerMessage && e.payload.server_message_event.sender_id == CLIENT_ID)
+    return;
+
   List left = 0;
   List right = 0;
   int *rx = 0, *lx = 0;
@@ -34,8 +44,10 @@ void move_board(Event e, EventCallbackArgs args) {
       gameObject_move(ns, 0, *lx, 0);
       i++;
     }
+    Event multiplayer_move = Event_new(EventCustom);
+    event_custom_set_type(&multiplayer_move, *lx > 0 ? BoardMoveUp : BoardMoveDown);
+    send_event(multiplayer_move, 0);
   }
-
 }
 
 TextureStorage LoadTextures(Render render) {
@@ -93,20 +105,16 @@ void movePlayer(Event e, EventCallbackArgs _args) {
   gameObject_move(player, dx, dy, 0);
 }
 
-const EventCallbackArgs NO_ARGS = {
-    .length = 0,
-    .storage = 0,
-};
-
 Render GLOBAL_RENDER;
 
 #include <stdlib.h>
 
 void send_t(Event e, EventCallbackArgs args) {
-//  Event t_ev;
-//  t_ev.key = 'z';
-//  t_ev.type = Keyboard;
-//  send_event(t_ev);
+  BoardMoveType *move_type = 0;
+  EventCallbackArgs_unpack(args, &move_type);
+  Event t_ev = Event_new(EventCustom);
+  event_custom_set_type(&t_ev, *move_type);
+  send_event(t_ev, 0);
 }
 
 void start_game() {
@@ -125,20 +133,22 @@ void start_game() {
   TextureStorage textures = LoadTextures(render);
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
+  GLOBAL_RENDER = render;
 
   Event loop = Event_new(EventLoop);
   addEventListener(loop, movePlayer, EventCallbackArgs_pack(2, area, player));
-  GLOBAL_RENDER = render;
 
-  int *rx = malloc(sizeof(int));
-  *rx = -1;
-  Event key = Event_keyboard_new('k');
-  addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
+  Event key = Event_new(EventKeyboard);
 
-  rx = malloc(sizeof(int));
-  *rx = 1;
-  event_keyboard_set_key(&key, 'm');
-  addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
+//  int *rx = malloc(sizeof(int));
+//  *rx = -1;
+//  event_keyboard_set_key(&key, 'k');
+//  addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
+//
+//  rx = malloc(sizeof(int));
+//  *rx = 1;
+//  event_keyboard_set_key(&key, 'm');
+//  addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
 
   int *lx = malloc(sizeof(int));
   *lx = -1;
@@ -150,8 +160,26 @@ void start_game() {
   event_keyboard_set_key(&key, 'z');
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, 0, lx));
 
-  event_keyboard_set_key(&key, 't');
-  addEventListener(key, send_t, NO_ARGS);
+//  BoardMoveType *m_t_u = malloc(sizeof(BoardMoveType));
+//  *m_t_u = BoardMoveUp;
+//  event_keyboard_set_key(&key, 'k');
+//  addEventListener(key, send_t, EventCallbackArgs_pack(1, m_t_u));
+//
+//  BoardMoveType *m_t_d = malloc(sizeof(BoardMoveType));
+//  *m_t_d = BoardMoveDown;
+//  event_keyboard_set_key(&key, 'm');
+//  addEventListener(key, send_t, EventCallbackArgs_pack(1, m_t_d));
+
+  Event right_board_move = Event_new(EventServerMessage);
+  right_board_move.payload.server_message_event.custom_event_type = BoardMoveUp;
+  int *rx = malloc(sizeof(int));
+  *rx = -1;
+  addEventListener(right_board_move, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
+
+  rx = malloc(sizeof(int));
+  *rx = 1;
+  right_board_move.payload.server_message_event.custom_event_type = BoardMoveDown;
+  addEventListener(right_board_move, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
 
 //  list_free(players, gameObject_free);
 //  list_free(nishal_right, gameObject_free);
