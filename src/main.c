@@ -35,7 +35,6 @@ int main() {
 //  }
 
   clientInit("127.0.0.1", DPORT);
-  // 4623
   start_game();
   start_event_loop();
 }

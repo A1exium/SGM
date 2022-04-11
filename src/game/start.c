@@ -12,18 +12,12 @@ enum GameObjectType_t {
   Nishal,
 };
 
-void move_board(EventCallbackArgs args) {
+void move_board(Event e, EventCallbackArgs args) {
   List left = 0;
   List right = 0;
   int *rx = 0, *lx = 0;
   EventCallbackArgs_unpack(args, &left, &right, &rx, &lx);
-  Event t_ev;
-  t_ev.type = Keyboard;
   if (rx) {
-    if (*rx == -1)
-      t_ev.key = 'k';
-    else
-      t_ev.key = 'm';
     int i = 0;
     foreach(GameObject ns = 0, ns, right) {
       if(i == 0 && (gameObject_get_pos(ns).y + *rx == AREA_MAX_Y || gameObject_get_pos(ns).y + *rx == 1))
@@ -33,10 +27,6 @@ void move_board(EventCallbackArgs args) {
     }
   }
   else if (lx) {
-    if (*lx == -1)
-      t_ev.key = 'a';
-    else
-      t_ev.key = 'z';
     int i = 0;
     foreach(GameObject ns = 0, ns, left) {
       if(i == 0 && (gameObject_get_pos(ns).y + *lx + 2 == AREA_MAX_Y || gameObject_get_pos(ns).y + *lx == -1))
@@ -46,9 +36,6 @@ void move_board(EventCallbackArgs args) {
     }
   }
 
-//  if (send_event) {
-//    send_event(t_ev);
-//  }
 }
 
 TextureStorage LoadTextures(Render render) {
@@ -78,7 +65,7 @@ void initGame(List players, List nishals_left, List nishals_right, Area area) {
   createGameObject(area,Player, AREA_MAX_X / 2, AREA_MAX_Y / 2, 2,  players);
 }
 
-void movePlayer(EventCallbackArgs _args) {
+void movePlayer(Event e, EventCallbackArgs _args) {
 //  int *dx, *dy;
   static int dx = 1, dy = 1;
   GameObject player;
@@ -115,13 +102,12 @@ Render GLOBAL_RENDER;
 
 #include <stdlib.h>
 
-void send_t(EventCallbackArgs args) {
-  Event t_ev;
-  t_ev.key = 'z';
-  t_ev.type = Keyboard;
-  send_event(t_ev);
+void send_t(Event e, EventCallbackArgs args) {
+//  Event t_ev;
+//  t_ev.key = 'z';
+//  t_ev.type = Keyboard;
+//  send_event(t_ev);
 }
-
 
 void start_game() {
 
@@ -140,34 +126,31 @@ void start_game() {
   render_set_textureStorage(render, textures);
   GameObject *player = listItem_get(list_first(players));
 
-  Event loop;
-  loop.type = LoopEvent;
+  Event loop = Event_new(EventLoop);
   addEventListener(loop, movePlayer, EventCallbackArgs_pack(2, area, player));
   GLOBAL_RENDER = render;
 
   int *rx = malloc(sizeof(int));
   *rx = -1;
-  Event key;
-  key.type = Keyboard;
-  key.key = 'k';
+  Event key = Event_keyboard_new('k');
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
 
   rx = malloc(sizeof(int));
   *rx = 1;
-  key.key = 'm';
+  event_keyboard_set_key(&key, 'm');
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, rx, 0));
 
   int *lx = malloc(sizeof(int));
   *lx = -1;
-  key.key = 'a';
+  event_keyboard_set_key(&key, 'a');
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, 0, lx));
 
   lx = malloc(sizeof(int));
   *lx = 1;
-  key.key = 'z';
+  event_keyboard_set_key(&key, 'z');
   addEventListener(key, move_board, EventCallbackArgs_pack(4, nishal_left, nishal_right, 0, lx));
 
-  key.key = 't';
+  event_keyboard_set_key(&key, 't');
   addEventListener(key, send_t, NO_ARGS);
 
 //  list_free(players, gameObject_free);
