@@ -33,8 +33,9 @@ int main() {
 //  } else {
 //    printf("Server inited\n");
 //  }
-
-  clientInit("127.0.0.1", DPORT);
+  char buf[128];
+  scanf("%s", buf);
+  clientInit(buf, DPORT);
   start_game();
   start_event_loop();
 }
