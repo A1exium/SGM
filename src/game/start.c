@@ -113,7 +113,7 @@ void movePlayer(Event e, EventCallbackArgs _args) {
     GameObject new_pos_container = event_server_message_get_data(e, deserialize_player);
     if (new_pos_container) {
       Position new = gameObject_get_pos(new_pos_container);
-      gameObject_move(player, new.x - cx, new.y - cy, 0);
+      gameObject_move(player, ((int)Area_get_size_x(area) - 1 - new.x) - cx, ((int)Area_get_size_y(area) - 1 - new.y) - cy, 0);
       GameObject_free(new_pos_container);
     }
     return;
