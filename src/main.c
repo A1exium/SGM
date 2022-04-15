@@ -35,7 +35,10 @@ int main() {
 //  }
   char buf[128];
   scanf("%s", buf);
-  clientInit(buf, DPORT);
+//  if (serverInit(buf, DPORT) != 0) {
+    clientInit(buf, DPORT);
+  printf("inited\n");
+//  }
   start_game();
   start_event_loop();
 }
