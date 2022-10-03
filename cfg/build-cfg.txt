@@ -1,1 +1,1 @@
-set(RENDER "sdl1")
+set(RENDER "sdl")
