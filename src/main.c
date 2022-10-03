@@ -34,11 +34,11 @@ int main() {
 //    printf("Server inited\n");
 //  }
   char buf[128];
+  int port;
   scanf("%s", buf);
-//  if (serverInit(buf, DPORT) != 0) {
-    clientInit(buf, DPORT);
-  printf("inited\n");
-//  }
+  scanf("%d", &port);
+  printf("Connection to %s:%d\n", buf, port);
+  printf("inited with code %d; client status: %d\n", clientInit(buf, port), CLIENT_STATUS);
   start_game();
   start_event_loop();
 }

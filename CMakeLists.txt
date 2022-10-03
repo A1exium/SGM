@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.17)
 project(SGM C)
 
+add_compile_options(-Wall -Wextra)
 set(CMAKE_C_STANDARD 11)
-
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=undefined -g")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer -fsanitize-recover=address -g")
+#add_compile_options(-fsanitize=address -g)
 include(cfg/build-cfg.txt)
 
 add_executable(SGM src/main.c src/game/start.c src/globals/const.h)
@@ -18,12 +21,15 @@ if(EMSCRIPTEN)
     set(CMAKE_EXECUTABLE_SUFFIX .html)
     target_link_options(SGM PRIVATE -sWASM -sALLOW_MEMORY_GROWTH -sASYNCIFY)
     target_link_options(SGM PRIVATE -sWEBSOCKET_SUBPROTOCOL='null')
+    target_link_options(SGM PRIVATE -sUSE_SDL=2)
+#    target_link_options(SGM PRIVATE -sWEBSOCKET_SUBPROTOCOL='text')
     target_link_options(SGM PRIVATE --preload-file ../assets/)
     set_target_properties(SGM PROPERTIES OUTPUT_NAME "index")
 ENDIF()
 
 target_compile_options(SGM PUBLIC -O3)
 target_link_options(SGM PUBLIC -O3)
+
 
 set_target_properties(SGM
         PROPERTIES

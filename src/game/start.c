@@ -110,7 +110,8 @@ void movePlayer(Event e, EventCallbackArgs _args) {
   int cx = player_pos.x, cy = player_pos.y;
 
   if (is_host) {
-    GameObject new_pos_container = event_server_message_get_data(e, deserialize_player);
+    GameObject new_pos_container = event_server_message_get_data(e,
+                                                                 (void *(*)(char *)) deserialize_player);
     if (new_pos_container) {
       Position new = gameObject_get_pos(new_pos_container);
       gameObject_move(player, ((int)Area_get_size_x(area) - 1 - new.x) - cx, ((int)Area_get_size_y(area) - 1 - new.y) - cy, 0);
@@ -136,7 +137,8 @@ void movePlayer(Event e, EventCallbackArgs _args) {
       dx = 1;
   }
   gameObject_move(player, dx, dy, 0);
-  send_event(Event_custom_new(PlayerMove, player), serialize_player);
+  send_event(Event_custom_new(PlayerMove, player),
+             (int (*)(void *, char *)) serialize_player);
 }
 
 Render GLOBAL_RENDER;
@@ -161,7 +163,8 @@ void PrintServerMessage(Event e, EventCallbackArgs _args) {
          e.payload.server_message_event.custom_event_type,
          e.payload.server_message_event.serialized_data
          );
-  GameObject obj = event_server_message_get_data(e, deserialize_player);
+  GameObject obj = event_server_message_get_data(e,
+                                                 (void *(*)(char *)) deserialize_player);
   printf("(%d, %d)\n", gameObject_get_pos(obj).x, gameObject_get_pos(obj).y);
 }
 
