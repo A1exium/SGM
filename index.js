@@ -3776,7 +3776,7 @@ var SOCKFS = {
    } else {
     try {
      var runtimeConfig = Module["websocket"] && "object" === typeof Module["websocket"];
-     var url = "ws:#".replace("#", "//");
+     var url = "wss://".replace("#", "//");
      if (runtimeConfig) {
       if ("string" === typeof Module["websocket"]["url"]) {
        url = Module["websocket"]["url"];
